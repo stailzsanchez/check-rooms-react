@@ -2,6 +2,6 @@
 
 body {
     min-width: 360px;
-    background: var(--tg-theme-bg-color);
-    color: var(--tg-theme-text-color);
+    /* background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color); */
 }
