@@ -1,0 +1,75 @@
+/* Основной стиль для элемента */
+.item {
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение для textarea */
+    align-items: flex-start; /* Выравнивание по левому краю */
+    gap: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.item-content {
+    display: flex; /* Горизонтальное расположение */
+    justify-content: space-between; /* Распределение пространства между элементами */
+    width: 100%; /* Занимает всю ширину */
+    /* margin-bottom: 5px; */
+}
+
+/* Стиль для заголовка элемента */
+.item-title {
+    display: flex; /* Горизонтальное расположение */
+    justify-content: space-between;
+    align-items: center;
+    flex: 1; /* Занимает доступное пространство */
+    text-align: left; /* Выравнивание текста по левому краю */
+}
+
+/* Контейнер для кнопок */
+.button-container {
+    display: flex;
+    gap: 5px; /* Промежуток между кнопками */
+}
+
+/* Стиль для кнопок */
+.button {
+    width: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: rgb(197, 189, 192);
+    transition: transform 0.2s, background-color 0.3s; /* Добавлено для плавного изменения цвета */
+}
+
+.button:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+}
+
+/* Стиль для кнопки OK */
+.button.ok {
+    background-color: #4CAF50; /* Зеленый цвет */
+}
+
+
+
+/* Стиль для кнопки Problem */
+.button.problem {
+    background-color: #f44336; /* Красный цвет */
+}
+
+/* Стиль для текстового поля */
+textarea {
+    width: 100%; /* Растягиваем на всю ширину родителя */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none; /* Запрет изменения размера */
+    margin-top: 40px; /* Отступ сверху */
+}
+

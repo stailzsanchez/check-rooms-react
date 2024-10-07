@@ -1,0 +1,30 @@
+.room-select {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.room-select label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333; /* Цвет текста для метки */
+}
+
+.room-select input {
+    width: 100%; /* Занимает всю ширину родителя */
+    padding: 12px; /* Увеличенный отступ для лучшего восприятия */
+    border: 1px solid #ccc; /* Светло-серая рамка */
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Плавный переход для рамки и тени */
+}
+
+.room-select input:focus {
+    border-color: #4CAF50; /* Зеленая рамка при фокусе */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Тень при фокусе */
+    outline: none; /* Убираем стандартный контур */
+}
+
+.room-select input::placeholder {
+    color: #aaa; /* Цвет для плейсхолдера */
+}
