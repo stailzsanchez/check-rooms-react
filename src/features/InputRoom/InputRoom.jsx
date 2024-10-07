@@ -7,15 +7,17 @@ export const RoomNumberInput = () => {
   const dispatch = useDispatch();
   const rooms = useSelector((state) => state.rooms.list);
   const [inputValue, setInputValue] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
+    setShowOptions(true);
   };
 
-  const handleRoomChange = (event) => {
-    const selectedRoom = event.target.value;
-    setInputValue(selectedRoom);
-    dispatch(setSelectedRoom(selectedRoom));
+  const handleRoomSelect = (roomName) => {
+    setInputValue(roomName);
+    dispatch(setSelectedRoom(roomName));
+    setShowOptions(false);
   };
 
   return (
@@ -26,15 +28,22 @@ export const RoomNumberInput = () => {
         id="roomSelect"
         value={inputValue}
         onChange={handleInputChange}
-        list="rooms"
         placeholder="Введите или выберите кабинет"
         required
+        onFocus={() => setShowOptions(true)}
+        onBlur={() => setTimeout(() => setShowOptions(false), 100)} // Задержка для клика по опции
       />
-      <datalist id="rooms">
-        {rooms.map((room) => (
-          <option key={room.id} value={room.name} />
-        ))}
-      </datalist>
+      {showOptions && (
+        <div className="options-list">
+          {rooms
+            .filter((room) => room.name.toLowerCase().includes(inputValue.toLowerCase()))
+            .map((room) => (
+              <div key={room.id} className="option" onClick={() => handleRoomSelect(room.name)}>
+                {room.name}
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 };

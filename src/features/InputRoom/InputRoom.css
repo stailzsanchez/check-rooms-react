@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
+    position: relative; /* Для позиционирования выпадающего списка */
 }
 
 .room-select label {
@@ -27,4 +28,26 @@
 
 .room-select input::placeholder {
     color: #aaa; /* Цвет для плейсхолдера */
+}
+
+.options-list {
+    position: absolute; /* Позиционирование относительно родителя */
+    top: 100%; /* Подводим к нижней части input */
+    left: 0;
+    right: 0;
+    max-height: 200px; /* Ограничиваем высоту */
+    overflow-y: auto; /* Добавляем прокрутку */
+    background-color: white; /* Цвет фона */
+    border: 1px solid #ccc; /* Рамка */
+    border-radius: 5px; /* Закругленные углы */
+    z-index: 1000; /* Поверх других элементов */
+}
+
+.option {
+    padding: 10px; /* Отступы для опций */
+    cursor: pointer; /* Курсор при наведении */
+}
+
+.option:hover {
+    background-color: #f0f0f0; /* Цвет фона при наведении */
 }
