@@ -22,19 +22,8 @@ export const CheckList = () => {
   };
 
   const onSendData = useCallback(() => {
-    // const text = validateSendData(items);
-    tg.sendData(items);
-    // tg.sendData(JSON.stringify(text));
+    tg.sendData({ items: items, selectedRoom: selectedRoom });
   }, []);
-
-  //   const validateSendData = (items) => {
-  //     const isAllOK = items.every((item) => item.status === statuses.OK);
-  //     const isAllNotOK = items.every((item) => item.status !== statuses.OK);
-  //     if (isAllOK) return `✅ В {selectedRoom} всё ок`
-  //     else (isAllNotOK) {
-  //         const text = items.map(({title, textProblem}) => ``)
-  //     }
-  //   };
 
   const validateSendData = (items) => {
     const isAllOK = items.every((item) => item.status === statuses.OK);
