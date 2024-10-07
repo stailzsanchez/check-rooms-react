@@ -22,7 +22,8 @@ export const CheckList = () => {
   };
 
   const onSendData = useCallback(() => {
-    tg.sendData({ items: items, selectedRoom: selectedRoom });
+    const data = { items: items, selectedRoom: selectedRoom };
+    tg.sendData(JSON.stringify(data));
   }, []);
 
   const validateSendData = (items) => {
