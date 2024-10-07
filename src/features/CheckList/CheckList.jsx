@@ -22,7 +22,8 @@ export const CheckList = () => {
   };
 
   const onSendData = useCallback(() => {
-    tg.sendData(JSON.stringify(validateSendData(items)));
+    const text = validateSendData(items);
+    tg.sendData(JSON.stringify(text));
   }, []);
 
   //   const validateSendData = (items) => {
