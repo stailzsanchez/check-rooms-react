@@ -9,7 +9,9 @@ export const RoomNumberInput = () => {
   const rooms = useSelector((state) => state.rooms.list);
   const [inputValue, setInputValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
+
   const { user } = useTelegram();
+
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
     setShowOptions(true);

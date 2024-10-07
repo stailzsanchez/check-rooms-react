@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Item } from '../Item/Item';
-import { changeStatus, setAllOk } from './checkListSlice';
+import { changeStatus, setAllOk, statuses } from './checkListSlice';
 import { RoomNumberInput } from '../InputRoom/InputRoom';
 import './CheckList.css';
 import { useCallback, useEffect } from 'react';
@@ -9,8 +9,9 @@ import { useTelegram } from '../../shared/telegram/useTelegram';
 
 export const CheckList = () => {
   const { items, isActiveSend } = useSelector((state) => state.checkList);
+  const { selectedRoom } = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
-  const { tg } = useTelegram();
+  const { tg, user } = useTelegram();
 
   const onChangeStatus = (id, newStatus) => {
     dispatch(changeStatus({ id, newStatus }));
@@ -21,8 +22,39 @@ export const CheckList = () => {
   };
 
   const onSendData = useCallback(() => {
-    tg.sendData(JSON.stringify(items));
+    tg.sendData(JSON.stringify(validateSendData(items)));
   }, []);
+
+  //   const validateSendData = (items) => {
+  //     const isAllOK = items.every((item) => item.status === statuses.OK);
+  //     const isAllNotOK = items.every((item) => item.status !== statuses.OK);
+  //     if (isAllOK) return `✅ В {selectedRoom} всё ок`
+  //     else (isAllNotOK) {
+  //         const text = items.map(({title, textProblem}) => ``)
+  //     }
+  //   };
+
+  const validateSendData = (items) => {
+    const isAllOK = items.every((item) => item.status === statuses.OK);
+
+    if (isAllOK) {
+      return `✅ В ${selectedRoom} всё ок - ${user}`;
+    } else {
+      const text = items
+        .map(({ title, textProblem, status }) => {
+          if (status === statuses.PROBLEM) {
+            return `❌ ${title}: ${textProblem}`;
+          } else if (status === statuses.OK) {
+            return `✅ ${title}`;
+          }
+          return '';
+        })
+        .filter(Boolean)
+        .join('\n'); // Убираем пустые строки и соединяем с новой строки
+
+      return `${user} - проблемы в ${selectedRoom}:\n${text}`;
+    }
+  };
 
   // useEffect(() => {
   //     tg.onEvent('mainButtonClicked', onSendData)
