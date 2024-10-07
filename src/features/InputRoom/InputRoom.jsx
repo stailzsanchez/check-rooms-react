@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedRoom } from './InputRoomSlice';
 import './InputRoom.css';
+import { useTelegram } from '../../shared/telegram/useTelegram';
 
 export const RoomNumberInput = () => {
   const dispatch = useDispatch();
   const rooms = useSelector((state) => state.rooms.list);
   const [inputValue, setInputValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
-
+  const { user } = useTelegram();
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
     setShowOptions(true);
@@ -22,7 +23,8 @@ export const RoomNumberInput = () => {
 
   return (
     <div className="room-select">
-      <label htmlFor="roomSelect">Выберите кабинет:</label>
+      <label htmlFor="roomSelect">Привет {user}</label>
+      <label htmlFor="roomSelect">Выбери кабинет:</label>
       <input
         type="text"
         id="roomSelect"
