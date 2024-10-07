@@ -21,10 +21,10 @@ export const CheckList = () => {
     dispatch(setAllOk());
   };
 
-  const onSendData = useCallback(() => {
+  const onSendData = () => {
     const data = { items: items, selectedRoom: selectedRoom };
     tg.sendData(JSON.stringify(data));
-  }, []);
+  };
 
   const validateSendData = (items) => {
     const isAllOK = items.every((item) => item.status === statuses.OK);
