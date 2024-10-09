@@ -2,52 +2,57 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    position: relative; /* Для позиционирования выпадающего списка */
+    position: relative;
 }
 
 .room-select label {
     font-weight: bold;
     margin-bottom: 5px;
-    color: #333; /* Цвет текста для метки */
+    color: #333;
 }
 
 .room-select input {
-    width: 100%; /* Занимает всю ширину родителя */
-    padding: 12px; /* Увеличенный отступ для лучшего восприятия */
-    border: 1px solid #ccc; /* Светло-серая рамка */
+    width: 200px;
+    padding: 12px;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s; /* Плавный переход для рамки и тени */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .room-select input:focus {
-    border-color: #4CAF50; /* Зеленая рамка при фокусе */
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Тень при фокусе */
-    outline: none; /* Убираем стандартный контур */
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
 }
 
 .room-select input::placeholder {
-    color: #aaa; /* Цвет для плейсхолдера */
+    color: #aaa;
 }
 
 .options-list {
-    position: absolute; /* Позиционирование относительно родителя */
-    top: 100%; /* Подводим к нижней части input */
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    max-height: 200px; /* Ограничиваем высоту */
-    overflow-y: auto; /* Добавляем прокрутку */
-    background-color: white; /* Цвет фона */
-    border: 1px solid #ccc; /* Рамка */
-    border-radius: 5px; /* Закругленные углы */
-    z-index: 1000; /* Поверх других элементов */
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
 }
 
 .option {
-    padding: 10px; /* Отступы для опций */
-    cursor: pointer; /* Курсор при наведении */
+    padding: 10px;
+    cursor: pointer;
 }
 
 .option:hover {
-    background-color: #f0f0f0; /* Цвет фона при наведении */
+    background-color: #f0f0f0;
+}
+
+.warn-room {
+    margin-top: 5px;
+    color: var(--text-red);
 }

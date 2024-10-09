@@ -1,45 +1,52 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedRoom } from './InputRoomSlice';
+import { setSelectedRoom, setIsValidRoom } from './InputRoomSlice';
 import './InputRoom.css';
 import { useTelegram } from '../../shared/telegram/useTelegram';
 
 export const RoomNumberInput = () => {
   const dispatch = useDispatch();
-  const rooms = useSelector((state) => state.rooms.list);
+  const { list, isValidRoom} = useSelector((state) => state.rooms);
   const [inputValue, setInputValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
 
   const { user } = useTelegram();
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const onInputChange = (event) => {
+    const value = event.target.value
+    setInputValue(value);
+    isValidInput(value)
     setShowOptions(true);
   };
+
+  const isValidInput = (text) => {
+    const isValid = list.some(room => room.name === text);
+    dispatch(setIsValidRoom(isValid))
+  }
 
   const handleRoomSelect = (roomName) => {
     setInputValue(roomName);
     dispatch(setSelectedRoom(roomName));
+    isValidInput(roomName)
     setShowOptions(false);
   };
 
   return (
     <div className="room-select">
-      <label htmlFor="roomSelect">Привет {user}</label>
-      <label htmlFor="roomSelect">Выбери кабинет:</label>
+      <label htmlFor="roomSelect">Привет {`*username - в работе*`} {user}</label>
       <input
         type="text"
         id="roomSelect"
         value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Введите или выберите кабинет"
+        onChange={onInputChange}
+        placeholder="Введите кабинет"
         required
         onFocus={() => setShowOptions(true)}
-        onBlur={() => setTimeout(() => setShowOptions(false), 100)} // Задержка для клика по опции
+        onBlur={() => setTimeout(() => setShowOptions(false), 100)}
       />
       {showOptions && (
         <div className="options-list">
-          {rooms
+          {list
             .filter((room) => room.name.toLowerCase().includes(inputValue.toLowerCase()))
             .map((room) => (
               <div key={room.id} className="option" onClick={() => handleRoomSelect(room.name)}>
@@ -48,6 +55,9 @@ export const RoomNumberInput = () => {
             ))}
         </div>
       )}
+      {
+        !isValidRoom && <div className='warn-room'>Выберите существующий кабинет</div>
+      }
     </div>
   );
 };

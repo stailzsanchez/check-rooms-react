@@ -22,15 +22,17 @@
     cursor: pointer;
     background-color: rgb(197, 189, 192);
     transition: background-color 0.3s;
-}
-
- .check-list__button:hover {
-    background-color: #45a049;
+    cursor: initial;
 }
 
 .check-list__button.active {
     background-color: #4CAF50;
     color: white;
+    cursor: pointer;
+}
+
+.check-list__button.active:hover {
+    background-color: #45a049;
 }
 
 .check-list__button.select-all {
@@ -39,4 +41,9 @@
 
 .items {
     margin-top: 20px;
+}
+
+.warn-fields {
+    margin-top: 10px;
+    color: var(--text-red);
 }
