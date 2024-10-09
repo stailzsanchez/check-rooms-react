@@ -51,7 +51,7 @@
 }
 
 .button.problem {
-    background-color: var(--red);
+    background-color: var(--bg-red);
 }
 
 textarea {
