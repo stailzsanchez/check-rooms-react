@@ -30,6 +30,11 @@
     color: #aaa;
 }
 
+.last-check__wrap {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
 .options-list {
     position: absolute;
     top: 100%;

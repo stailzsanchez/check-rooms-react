@@ -1,39 +1,66 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedRoom, setIsValidRoom } from './InputRoomSlice';
-import './InputRoom.css';
-import { useTelegram } from '../../shared/telegram/useTelegram';
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
+import "./InputRoom.css";
+import { useTelegram } from "../../shared/telegram/useTelegram";
 
 export const RoomNumberInput = () => {
   const dispatch = useDispatch();
-  const { list, isValidRoom} = useSelector((state) => state.rooms);
-  const [inputValue, setInputValue] = useState('');
+  const { rooms, isValidRoom, selectedRoom } = useSelector(
+    (state) => state.rooms
+  );
+  const [inputValue, setInputValue] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
   const { user } = useTelegram();
 
+  console.log(selectedRoom);
+
   const onInputChange = (event) => {
-    const value = event.target.value
-    setInputValue(value);
-    isValidInput(value)
+    const inputText = event.target.value;
+    setInputValue(inputText);
+    isValidInput(inputText);
     setShowOptions(true);
+    dispatch(getRooms(inputText));
   };
 
   const isValidInput = (text) => {
-    const isValid = list.some(room => room.name === text);
-    dispatch(setIsValidRoom(isValid))
-  }
+    const isValid = rooms.some((room) => room.name === text);
+    dispatch(setIsValidRoom(isValid));
+  };
 
   const handleRoomSelect = (roomName) => {
     setInputValue(roomName);
-    dispatch(setSelectedRoom(roomName));
-    isValidInput(roomName)
+    isValidInput(roomName);
     setShowOptions(false);
+    dispatch(setSelectedRoom(roomName));
   };
+
+  // const LastCheckUI = !!selectedRoom.id && (
+  //   <div className="last-check__wrap">
+  //     <span className="last-check__time">
+  //       {selectedRoom.date.split(" ")[1]}
+  //     </span>
+  //     <span className="last-check__date">
+  //       {selectedRoom.date.split(" ")[0]}
+  //     </span>
+  //     <span className="last-check__admin">{selectedRoom.name_admin}</span>
+  //   </div>
+  // );
+
+  const LastCheckUI = !!selectedRoom.id && (
+    <div className="last-check__wrap">
+      Последняя проверка {selectedRoom.date.split(" ")[1]}{" "}
+      {selectedRoom.date.split(" ")[0]} {selectedRoom.name_admin}
+    </div>
+  );
 
   return (
     <div className="room-select">
-      <label htmlFor="roomSelect">Привет {`*username - в работе*`} {user}</label>
+      <label htmlFor="roomSelect">
+        Привет {`*username - в работе*`} {user}
+      </label>
+      {LastCheckUI}
       <input
         type="text"
         id="roomSelect"
@@ -46,18 +73,25 @@ export const RoomNumberInput = () => {
       />
       {showOptions && (
         <div className="options-list">
-          {list
-            .filter((room) => room.name.toLowerCase().includes(inputValue.toLowerCase()))
+          {rooms
+            .filter((room) =>
+              room.name.toLowerCase().includes(inputValue.toLowerCase())
+            )
             .map((room) => (
-              <div key={room.id} className="option" onClick={() => handleRoomSelect(room.name)}>
+              <div
+                key={room.id}
+                className="option"
+                onClick={() => handleRoomSelect(room.name)}
+              >
                 {room.name}
               </div>
             ))}
         </div>
       )}
-      {
-        !isValidRoom && <div className='warn-room'>Выберите существующий кабинет</div>
-      }
+
+      {!isValidRoom && (
+        <div className="warn-room">Выберите существующий кабинет</div>
+      )}
     </div>
   );
 };

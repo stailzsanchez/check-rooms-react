@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const roomSlice = createSlice({
   name: "rooms",
   initialState: {
-    list: [
+    rooms: [
       { id: 1, name: "B201" },
       { id: 2, name: "B202" },
       { id: 3, name: "B203" },
@@ -15,19 +16,66 @@ const roomSlice = createSlice({
       { id: 9, name: "F203" },
       { id: 10, name: "F204" },
     ],
-    selectedRoom: "",
+    selectedRoom: {},
     isValidRoom: false,
+    loadingRooms: false,
+    errorRooms: "",
   },
   reducers: {
+    setRooms: (state, { payload }) => {
+      state.rooms = payload;
+    },
     setSelectedRoom: (state, action) => {
-      const selectedRoom = action.payload;
-      state.selectedRoom = selectedRoom;
+      const selectedRoomName = action.payload;
+      const foundRoom = state.rooms.find(
+        (room) => room.name === selectedRoomName
+      );
+      if (!foundRoom) state.selectedRoom = {};
+      state.selectedRoom = foundRoom;
     },
     setIsValidRoom: (state, action) => {
       state.isValidRoom = action.payload;
     },
+    setLoadingRooms: (state, { payload }) => {
+      state.loadingRooms = payload;
+    },
+    setErrorRooms: (state, { payload }) => {
+      state.error = payload;
+    },
   },
 });
 
-export const { setSelectedRoom, setIsValidRoom } = roomSlice.actions;
+// AppThunk sets the type definitions for the dispatch method
+export const getRooms = (searchText) => {
+  return async (dispatch) => {
+    dispatch(setLoadingRooms(true));
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_CHECKROOMS}/rooms`,
+        {
+          searchText: searchText,
+        }
+      );
+      dispatch(setRooms(res.data));
+      console.log("searchText", searchText);
+      console.log("getRooms", res.data);
+      // if (res.data.length !== 0) {
+      //   dispatch(setSelectedLogon(res.data[0]));
+      // }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      dispatch(setErrorRooms(message));
+    } finally {
+      dispatch(setLoadingRooms(false));
+    }
+  };
+};
+
+export const {
+  setSelectedRoom,
+  setIsValidRoom,
+  setLoadingRooms,
+  setErrorRooms,
+  setRooms,
+} = roomSlice.actions;
 export default roomSlice.reducer;
