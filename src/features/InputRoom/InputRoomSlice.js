@@ -5,7 +5,12 @@ const roomSlice = createSlice({
   name: "rooms",
   initialState: {
     rooms: [
-      { id: 1, name: "B201" },
+      {
+        id: 1,
+        name: "B104",
+        date: "2023-09-01 10:10:10",
+        name_admin: "stas",
+      },
       { id: 2, name: "B202" },
       { id: 3, name: "B203" },
       { id: 4, name: "B204" },
