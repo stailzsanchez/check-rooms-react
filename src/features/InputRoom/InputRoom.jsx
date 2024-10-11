@@ -14,6 +14,10 @@ export const RoomNumberInput = () => {
 
   const { user } = useTelegram();
 
+  const lastCheckTime = selectedRoom.date?.split(" ")[1];
+  const lastCheckDate = selectedRoom.date?.split(" ")[0];
+  const lastCheckNameAdmin = selectedRoom?.name_admin;
+
   console.log(selectedRoom);
 
   const onInputChange = (event) => {
@@ -48,10 +52,9 @@ export const RoomNumberInput = () => {
   //   </div>
   // );
 
-  const LastCheckUI = !!selectedRoom.id && (
+  const LastCheckUI = !!lastCheckDate && (
     <div className="last-check__wrap">
-      Последняя проверка {selectedRoom.date.split(" ")[1]}{" "}
-      {selectedRoom.date.split(" ")[0]} {selectedRoom.name_admin}
+      {`Последняя проверка ${lastCheckTime} ${lastCheckDate} ${lastCheckNameAdmin}`}
     </div>
   );
 
