@@ -10,13 +10,13 @@ export default defineConfig({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
     manifest: {
-      name: 'Название вашего приложения',
-      short_name: 'Краткое название',
-      description: 'Описание вашего приложения',
+      name: 'Check CU',
+      short_name: 'Check rooms',
+      description: 'Central university Technical support',
       theme_color: '#ffffff',
       icons: [
         {
-          src: 'check192.png',
+          src: 'cu192.png',
           sizes: '192x192',
           type: 'image/png'
         },
