@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const statuses = {
   OK: "OK",
   PROBLEM: "PROBLEM",
   EMPTY: "EMPTY",
+  SOLUTION: "SOLUTION",
 };
 
-const { OK, EMPTY, PROBLEM } = statuses;
+const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
 
 const initialState = {
   items: [
@@ -54,6 +56,10 @@ const initialState = {
     },
   ],
   isFullChecked: false,
+  loadingSend: false,
+  errorSend: false,
+  loadingGetCheckTypes: false,
+  errorGetCheckTypes: false,
 };
 
 const checkIsFullChecked = (items) => {
@@ -76,6 +82,19 @@ const checkListSlice = createSlice({
   name: "checkList",
   initialState,
   reducers: {
+    initItems: (state, action) => {
+      const {} = action.payload;
+      const sendData = state.items;
+      if (state.textSolution !== "") {
+        sendData.status = SOLUTION;
+      }
+    },
+    sendCheck: (state, action) => {
+      const sendData = state.items;
+      if (state.textSolution !== "") {
+        sendData.status = SOLUTION;
+      }
+    },
     changeStatus: (state, action) => {
       const { id, newStatus } = action.payload;
       const item = state.items.find((item) => item.id === id);
@@ -107,13 +126,67 @@ const checkListSlice = createSlice({
       });
       state.isFullChecked = checkIsFullChecked(state.items);
     },
+    setLoadingSend: (state, { payload }) => {
+      state.loadingSend = payload;
+    },
+    setErrorSend: (state, { payload }) => {
+      state.errorSend = payload;
+    },
+    setLoadingGetCheckTypes: (state, { payload }) => {
+      state.loadingSend = payload;
+    },
+    setErrorGetCheckTypes: (state, { payload }) => {
+      state.errorSend = payload;
+    },
   },
 });
+
+// AppThunk sets the type definitions for the dispatch method
+export const sendCheck = (state) => {
+  return async (dispatch) => {
+    dispatch(setLoadingSend(true));
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_CHECKROOMS}/send-check`,
+        {
+          data: state.items,
+        }
+      );
+      console.log("sendCheck", res.data);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      dispatch(setErrorSend(message));
+    } finally {
+      dispatch(setLoadingSend(false));
+    }
+  };
+};
+
+export const getCheckTypes = (state) => {
+  return async (dispatch) => {
+    dispatch(setLoadingGetCheckTypes(true));
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_CHECKROOMS}/get-check-types`
+      );
+      console.log("get-check-types", res.data);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      dispatch(setErrorGetCheckTypes(message));
+    } finally {
+      dispatch(setLoadingGetCheckTypes(false));
+    }
+  };
+};
 
 export const {
   changeStatus,
   changeTextProblem,
   changeTextSolution,
   setAllOk,
+  setErrorSend,
+  setLoadingSend,
+  setLoadingGetCheckTypes,
+  setErrorGetCheckTypes,
 } = checkListSlice.actions;
 export default checkListSlice.reducer;
