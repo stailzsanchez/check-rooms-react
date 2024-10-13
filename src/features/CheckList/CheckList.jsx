@@ -1,18 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 
-import { Item } from '../Item/Item';
-import { changeStatus, setAllOk } from './checkListSlice';
-import { RoomNumberInput } from '../InputRoom/InputRoom';
-import './CheckList.css';
-import { useTelegram } from '../../shared/telegram/useTelegram';
+import { Item } from "../Item/Item";
+import { changeStatus, setAllOk } from "./checkListSlice";
+import { RoomNumberInput } from "../InputRoom/InputRoom";
+import "./CheckList.css";
 
 export const CheckList = () => {
   const { items, isFullChecked } = useSelector((state) => state.checkList);
   const { selectedRoom, isValidRoom } = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
-  const { tg, user } = useTelegram();
 
-  const isActiveSend = isFullChecked && isValidRoom
+  const isActiveSend = isFullChecked && isValidRoom;
 
   const onChangeStatus = (id, newStatus) => {
     dispatch(changeStatus({ id, newStatus }));
@@ -23,10 +21,8 @@ export const CheckList = () => {
   };
 
   const onSendData = () => {
-    if(!isActiveSend) return
-
-    const data = { items: items, selectedRoom: selectedRoom };
-    tg.sendData(JSON.stringify(data));
+    if (!isActiveSend) return;
+    console.log("onSendData", items);
   };
 
   return (
@@ -41,17 +37,18 @@ export const CheckList = () => {
       <div className="check-list__controls">
         <button
           onClick={onSendData}
-          className={`check-list__button ${isActiveSend ? 'active' : ''}`}
+          className={`check-list__button ${isActiveSend ? "active" : ""}`}
         >
           Отправить
         </button>
-        <button className="check-list__button select-all" onClick={onAllOkClick}>
+        <button
+          className="check-list__button select-all"
+          onClick={onAllOkClick}
+        >
           ✅ Отметить все
         </button>
       </div>
-      {
-        !isActiveSend && <div className='warn-fields'>Заполните все поля</div>
-      }
+      {!isActiveSend && <div className="warn-fields">Заполните все поля</div>}
     </div>
   );
 };

@@ -31,8 +31,8 @@
 }
 
 .button {
-    width: 100px;
-    padding: 10px;
+    width: fit-content;
+    padding: 8px;
     border: none;
     border-radius: 5px;
     color: white;

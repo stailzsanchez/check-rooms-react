@@ -1,10 +1,15 @@
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { changeStatus, changeText, statuses } from '../CheckList/checkListSlice';
-import './Item.css';
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import {
+  changeStatus,
+  changeTextProblem,
+  changeTextSolution,
+  statuses,
+} from "../CheckList/checkListSlice";
+import "./Item.css";
 
 export const Item = ({ item }) => {
-  const { id, title, status, textProblem } = item;
+  const { id, title, status, textProblem, textSolution } = item;
   const dispatch = useDispatch();
 
   const onStatusClick = (clickStatus) => {
@@ -14,7 +19,8 @@ export const Item = ({ item }) => {
         newStatus = status !== statuses.OK ? statuses.OK : statuses.EMPTY;
         break;
       case statuses.PROBLEM:
-        newStatus = status !== statuses.PROBLEM ? statuses.PROBLEM : statuses.EMPTY;
+        newStatus =
+          status !== statuses.PROBLEM ? statuses.PROBLEM : statuses.EMPTY;
         break;
       default:
         newStatus = statuses.EMPTY;
@@ -24,15 +30,19 @@ export const Item = ({ item }) => {
 
   const onChangeTextProblem = (event) => {
     const newText = event.target.value;
-    dispatch(changeText({ id, newText }));
+    dispatch(changeTextProblem({ id, newText }));
+  };
+  const onChangeTextSolution = (event) => {
+    const newText = event.target.value;
+    dispatch(changeTextSolution({ id, newText }));
   };
 
   const styleOk = () => {
-    return status === statuses.OK ? 'button ok' : 'button';
+    return status === statuses.OK ? "button ok" : "button";
   };
 
   const styleProblem = () => {
-    return status === statuses.PROBLEM ? 'button problem' : 'button';
+    return status === statuses.PROBLEM ? "button problem" : "button";
   };
 
   return (
@@ -40,21 +50,35 @@ export const Item = ({ item }) => {
       <div className="item-content">
         <span className="item-title">{title}</span>
         <div className="button-container">
-          <button className={styleOk()} onClick={() => onStatusClick(statuses.OK)}>
+          <button
+            className={styleOk()}
+            onClick={() => onStatusClick(statuses.OK)}
+          >
             ОК
           </button>
-          <button className={styleProblem()} onClick={() => onStatusClick(statuses.PROBLEM)}>
+          <button
+            className={styleProblem()}
+            onClick={() => onStatusClick(statuses.PROBLEM)}
+          >
             Проблема
           </button>
         </div>
       </div>
       {status === statuses.PROBLEM && (
-        <textarea
-          className="problem-textarea"
-          value={textProblem}
-          onChange={onChangeTextProblem}
-          placeholder="Опишите проблему. Минимум 5 символов"
-        />
+        <>
+          <textarea
+            className="problem-textarea"
+            value={textProblem}
+            onChange={onChangeTextProblem}
+            placeholder="Опишите проблему. Минимум 5 символов"
+          />
+          <textarea
+            className="problem-textarea"
+            value={textSolution}
+            onChange={onChangeTextSolution}
+            placeholder="Опишите решение если решили"
+          />
+        </>
       )}
     </div>
   );
@@ -66,5 +90,6 @@ Item.propTypes = {
     title: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     textProblem: PropTypes.string,
+    textSolution: PropTypes.string,
   }).isRequired,
 };

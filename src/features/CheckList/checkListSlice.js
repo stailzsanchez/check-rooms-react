@@ -15,12 +15,43 @@ const initialState = {
       title: "Планшет снаружи",
       status: statuses.EMPTY,
       textProblem: "",
+      textSolution: "",
     },
-    { id: 2, title: "Тач", status: statuses.EMPTY, textProblem: "" },
-    { id: 3, title: "Звук", status: statuses.EMPTY, textProblem: "" },
-    { id: 4, title: "Sboard", status: statuses.EMPTY, textProblem: "" },
-    { id: 5, title: "Пенсил", status: statuses.EMPTY, textProblem: "" },
-    { id: 6, title: "Планшет внутри", status: statuses.EMPTY, textProblem: "" },
+    {
+      id: 2,
+      title: "Тач",
+      status: statuses.EMPTY,
+      textProblem: "",
+      textSolution: "",
+    },
+    {
+      id: 3,
+      title: "Звук",
+      status: statuses.EMPTY,
+      textProblem: "",
+      textSolution: "",
+    },
+    {
+      id: 4,
+      title: "Sboard",
+      status: statuses.EMPTY,
+      textProblem: "",
+      textSolution: "",
+    },
+    {
+      id: 5,
+      title: "Пенсил",
+      status: statuses.EMPTY,
+      textProblem: "",
+      textSolution: "",
+    },
+    {
+      id: 6,
+      title: "Планшет внутри",
+      status: statuses.EMPTY,
+      textProblem: "",
+      textSolution: "",
+    },
   ],
   isFullChecked: false,
 };
@@ -54,13 +85,21 @@ const checkListSlice = createSlice({
       }
       state.isFullChecked = checkIsFullChecked(state.items);
     },
-    changeText: (state, action) => {
+    changeTextProblem: (state, action) => {
       const { id, newText } = action.payload;
       const item = state.items.find((item) => item.id === id);
       if (item) {
         item.textProblem = newText;
       }
       state.isFullChecked = checkIsFullChecked(state.items);
+    },
+    changeTextSolution: (state, action) => {
+      const { id, newText } = action.payload;
+      const item = state.items.find((item) => item.id === id);
+      if (item) {
+        item.textSolution = newText;
+      }
+      // state.isFullChecked = checkIsFullChecked(state.items);
     },
     setAllOk: (state) => {
       state.items.forEach((item) => {
@@ -71,5 +110,10 @@ const checkListSlice = createSlice({
   },
 });
 
-export const { changeStatus, changeText, setAllOk } = checkListSlice.actions;
+export const {
+  changeStatus,
+  changeTextProblem,
+  changeTextSolution,
+  setAllOk,
+} = checkListSlice.actions;
 export default checkListSlice.reducer;
