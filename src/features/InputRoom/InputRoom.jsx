@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
 import "./InputRoom.css";
-import { useTelegram } from "../../shared/telegram/useTelegram";
 
 export const RoomNumberInput = () => {
   const dispatch = useDispatch();
@@ -12,13 +11,11 @@ export const RoomNumberInput = () => {
   const [inputValue, setInputValue] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
-  const { user } = useTelegram();
-
   const lastCheckTime = selectedRoom.date?.split(" ")[1];
   const lastCheckDate = selectedRoom.date?.split(" ")[0];
   const lastCheckNameAdmin = selectedRoom?.name_admin;
 
-  console.log(selectedRoom);
+  // console.log(selectedRoom);
 
   const onInputChange = (event) => {
     const inputText = event.target.value;
@@ -60,9 +57,7 @@ export const RoomNumberInput = () => {
 
   return (
     <div className="room-select">
-      <label htmlFor="roomSelect">
-        Привет {`*username - в работе*`} {user}
-      </label>
+      {/* <label htmlFor="roomSelect"></label> */}
       {LastCheckUI}
       <input
         type="text"
