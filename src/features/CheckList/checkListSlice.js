@@ -10,50 +10,56 @@ export const statuses = {
 
 const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
 
+const initCheckTypes = {
+  status: statuses.EMPTY,
+  textProblem: "",
+  textSolution: "",
+};
+
 const initialState = {
   items: [
-    {
-      id: 1,
-      title: "Планшет снаружи",
-      status: statuses.EMPTY,
-      textProblem: "",
-      textSolution: "",
-    },
-    {
-      id: 2,
-      title: "Тач",
-      status: statuses.EMPTY,
-      textProblem: "",
-      textSolution: "",
-    },
-    {
-      id: 3,
-      title: "Звук",
-      status: statuses.EMPTY,
-      textProblem: "",
-      textSolution: "",
-    },
-    {
-      id: 4,
-      title: "Sboard",
-      status: statuses.EMPTY,
-      textProblem: "",
-      textSolution: "",
-    },
-    {
-      id: 5,
-      title: "Пенсил",
-      status: statuses.EMPTY,
-      textProblem: "",
-      textSolution: "",
-    },
-    {
-      id: 6,
-      title: "Планшет внутри",
-      status: statuses.EMPTY,
-      textProblem: "",
-      textSolution: "",
-    },
+    // {
+    //   id: 1,
+    //   title: "Планшет снаружи",
+    //   status: statuses.EMPTY,
+    //   textProblem: "",
+    //   textSolution: "",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Тач",
+    //   status: statuses.EMPTY,
+    //   textProblem: "",
+    //   textSolution: "",
+    // },
+    // {
+    //   id: 3,
+    //   title: "Звук",
+    //   status: statuses.EMPTY,
+    //   textProblem: "",
+    //   textSolution: "",
+    // },
+    // {
+    //   id: 4,
+    //   title: "Sboard",
+    //   status: statuses.EMPTY,
+    //   textProblem: "",
+    //   textSolution: "",
+    // },
+    // {
+    //   id: 5,
+    //   title: "Пенсил",
+    //   status: statuses.EMPTY,
+    //   textProblem: "",
+    //   textSolution: "",
+    // },
+    // {
+    //   id: 6,
+    //   title: "Планшет внутри",
+    //   status: statuses.EMPTY,
+    //   textProblem: "",
+    //   textSolution: "",
+    // },
   ],
   isFullChecked: false,
   loadingSend: false,
@@ -82,19 +88,23 @@ const checkListSlice = createSlice({
   name: "checkList",
   initialState,
   reducers: {
-    initItems: (state, action) => {
-      const {} = action.payload;
-      const sendData = state.items;
-      if (state.textSolution !== "") {
-        sendData.status = SOLUTION;
+    initItemsWithTypes: (state, action) => {
+      const checkTypes = action.payload;
+      const itemsCheck = [];
+      for (const { id, name } of checkTypes) {
+        itemsCheck.push({ ...initCheckTypes, id: id, title: name });
       }
+      state.items = itemsCheck;
     },
-    sendCheck: (state, action) => {
-      const sendData = state.items;
-      if (state.textSolution !== "") {
-        sendData.status = SOLUTION;
-      }
-    },
+    // sendCheck: (state, action) => {
+    //   const sendData = state.items;
+    //   for(const item of sendData) {
+    //     if (item.textSolution !== "") {
+    //       item.status = SOLUTION;
+    //     }
+    //   }
+
+    // },
     changeStatus: (state, action) => {
       const { id, newStatus } = action.payload;
       const item = state.items.find((item) => item.id === id);
@@ -142,14 +152,25 @@ const checkListSlice = createSlice({
 });
 
 // AppThunk sets the type definitions for the dispatch method
-export const sendCheck = (state) => {
-  return async (dispatch) => {
+export const sendCheck = () => {
+  // debugger;
+  return async (dispatch, getState) => {
+    const state = getState();
+    console.log("const state = getState();", state);
     dispatch(setLoadingSend(true));
     try {
+      const sendData = state.items;
+      console.log("const sendData = state.items;", sendData);
+      for (const item of sendData) {
+        if (item.textSolution !== "") {
+          item.status = SOLUTION;
+        }
+      }
+      console.log("sendCheck", sendData);
       const res = await axios.post(
         `${import.meta.env.VITE_API_CHECKROOMS}/send-check`,
         {
-          data: state.items,
+          data: sendData,
         }
       );
       console.log("sendCheck", res.data);
@@ -162,13 +183,14 @@ export const sendCheck = (state) => {
   };
 };
 
-export const getCheckTypes = (state) => {
+export const getCheckTypes = () => {
   return async (dispatch) => {
     dispatch(setLoadingGetCheckTypes(true));
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_API_CHECKROOMS}/get-check-types`
       );
+      dispatch(initItemsWithTypes(res.data));
       console.log("get-check-types", res.data);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
@@ -185,6 +207,7 @@ export const {
   changeTextSolution,
   setAllOk,
   setErrorSend,
+  initItemsWithTypes,
   setLoadingSend,
   setLoadingGetCheckTypes,
   setErrorGetCheckTypes,

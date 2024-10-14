@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import { Item } from "../Item/Item";
-import { changeStatus, getCheckTypes, setAllOk } from "./checkListSlice";
+import { changeStatus, getCheckTypes, sendCheck, setAllOk } from "./checkListSlice";
 import { RoomNumberInput } from "../InputRoom/InputRoom";
 import "./CheckList.css";
 import { useEffect } from "react";
@@ -23,12 +23,12 @@ export const CheckList = () => {
 
   const onSendData = () => {
     if (!isActiveSend) return;
-    console.log("onSendData", items);
+    dispatch(sendCheck())
+    console.log("onSendData");
+    console.log("isActiveSend", isActiveSend);
   };
 
   useEffect(() => {
-    console.log("getCheckTypes");
-
     dispatch(getCheckTypes());
   }, []);
 
