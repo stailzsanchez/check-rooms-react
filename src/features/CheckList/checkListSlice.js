@@ -14,6 +14,7 @@ const initCheckTypes = {
   status: statuses.EMPTY,
   textProblem: "",
   textSolution: "",
+  name_admin: "stas",
 };
 
 const initialState = {
@@ -152,25 +153,25 @@ const checkListSlice = createSlice({
 });
 
 // AppThunk sets the type definitions for the dispatch method
-export const sendCheck = () => {
+export const sendCheck = (room_id) => {
   // debugger;
   return async (dispatch, getState) => {
-    const state = getState();
-    console.log("const state = getState();", state);
+    const items = getState().checkList.items;
     dispatch(setLoadingSend(true));
+    console.log("etState().checkList.items", items);
     try {
-      const sendData = state.items;
-      console.log("const sendData = state.items;", sendData);
-      for (const item of sendData) {
-        if (item.textSolution !== "") {
-          item.status = SOLUTION;
-        }
-      }
-      console.log("sendCheck", sendData);
+      // for (const item of sendData) {
+      //   console.log("item", item);
+      //   if (item.textSolution !== "") {
+      //     item.status = SOLUTION;
+      //   }
+      // }
+      console.log("sendCheck", items);
       const res = await axios.post(
         `${import.meta.env.VITE_API_CHECKROOMS}/send-check`,
         {
-          data: sendData,
+          items: items,
+          room_id: room_id,
         }
       );
       console.log("sendCheck", res.data);

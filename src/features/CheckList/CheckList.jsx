@@ -7,7 +7,7 @@ import "./CheckList.css";
 import { useEffect } from "react";
 
 export const CheckList = () => {
-  const { items, isFullChecked } = useSelector((state) => state.checkList);
+  const { items, isFullChecked, loadingSend } = useSelector((state) => state.checkList);
   const { selectedRoom, isValidRoom } = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ export const CheckList = () => {
 
   const onSendData = () => {
     if (!isActiveSend) return;
-    dispatch(sendCheck())
+    dispatch(sendCheck(selectedRoom.id))
     console.log("onSendData");
     console.log("isActiveSend", isActiveSend);
   };
@@ -55,6 +55,7 @@ export const CheckList = () => {
           ✅ Отметить все
         </button>
       </div>
+      {loadingSend && <div className="check-list__loading">Отправка...</div>}
       {!isActiveSend && <div className="warn-fields">Заполните все поля</div>}
     </div>
   );
