@@ -1,13 +1,15 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Item } from "../Item/Item";
-import { changeStatus, getCheckTypes, sendCheck, setAllOk } from "./checkListSlice";
-import { RoomNumberInput } from "../InputRoom/InputRoom";
-import "./CheckList.css";
-import { useEffect } from "react";
+import { Item } from '../Item/Item';
+import { changeStatus, getCheckTypes, sendCheck, sendStatuses, setAllOk } from './checkListSlice';
+import { RoomNumberInput } from '../InputRoom/InputRoom';
+import './CheckList.css';
+import { useEffect } from 'react';
+
+const { IDLE, SENDING, SUCCESS, ERROR } = sendStatuses;
 
 export const CheckList = () => {
-  const { items, isFullChecked, loadingSend } = useSelector((state) => state.checkList);
+  const { items, isFullChecked, sendStatus } = useSelector((state) => state.checkList);
   const { selectedRoom, isValidRoom } = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
 
@@ -23,9 +25,7 @@ export const CheckList = () => {
 
   const onSendData = () => {
     if (!isActiveSend) return;
-    dispatch(sendCheck(selectedRoom.id))
-    console.log("onSendData");
-    console.log("isActiveSend", isActiveSend);
+    dispatch(sendCheck(selectedRoom.id));
   };
 
   useEffect(() => {
@@ -44,19 +44,27 @@ export const CheckList = () => {
       <div className="check-list__controls">
         <button
           onClick={onSendData}
-          className={`check-list__button ${isActiveSend ? "active" : ""}`}
+          className={`check-list__button ${isActiveSend ? 'active' : ''}`}
+          disabled={sendStatus === SENDING}
         >
-          Отправить
+          {sendStatus === SENDING ? (
+            <>
+              Отправка
+              <div className="button-loader"></div>
+            </>
+          ) : (
+            'Отправить'
+          )}
         </button>
-        <button
-          className="check-list__button select-all"
-          onClick={onAllOkClick}
-        >
+        <button className="check-list__button select-all" onClick={onAllOkClick}>
           ✅ Отметить все
         </button>
       </div>
-      {loadingSend && <div className="check-list__loading">Отправка...</div>}
-      {!isActiveSend && <div className="warn-fields">Заполните все поля</div>}
+      {!isActiveSend && sendStatus !== SENDING && (
+        <div className="warn-fields">Заполните все поля</div>
+      )}
+      {sendStatus === SUCCESS && <div className="send-status success">✅ Отправлено успешно</div>}
+      {sendStatus === ERROR && <div className="send-status error">❌ Ошибка при отправке</div>}
     </div>
   );
 };

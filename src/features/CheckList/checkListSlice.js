@@ -7,8 +7,16 @@ export const statuses = {
   EMPTY: "EMPTY",
   SOLUTION: "SOLUTION",
 };
+export const sendStatuses = {
+  IDLE: "IDLE",
+  SENDING: "SENDING",
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
+};
+
 
 const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
+const { IDLE, SENDING, SUCCESS, ERROR } = sendStatuses;
 
 const initCheckTypes = {
   status: statuses.EMPTY,
@@ -18,55 +26,13 @@ const initCheckTypes = {
 };
 
 const initialState = {
-  items: [
-    // {
-    //   id: 1,
-    //   title: "Планшет снаружи",
-    //   status: statuses.EMPTY,
-    //   textProblem: "",
-    //   textSolution: "",
-    // },
-    // {
-    //   id: 2,
-    //   title: "Тач",
-    //   status: statuses.EMPTY,
-    //   textProblem: "",
-    //   textSolution: "",
-    // },
-    // {
-    //   id: 3,
-    //   title: "Звук",
-    //   status: statuses.EMPTY,
-    //   textProblem: "",
-    //   textSolution: "",
-    // },
-    // {
-    //   id: 4,
-    //   title: "Sboard",
-    //   status: statuses.EMPTY,
-    //   textProblem: "",
-    //   textSolution: "",
-    // },
-    // {
-    //   id: 5,
-    //   title: "Пенсил",
-    //   status: statuses.EMPTY,
-    //   textProblem: "",
-    //   textSolution: "",
-    // },
-    // {
-    //   id: 6,
-    //   title: "Планшет внутри",
-    //   status: statuses.EMPTY,
-    //   textProblem: "",
-    //   textSolution: "",
-    // },
-  ],
+  items: [],
   isFullChecked: false,
   loadingSend: false,
   errorSend: false,
   loadingGetCheckTypes: false,
   errorGetCheckTypes: false,
+  sendStatus: IDLE
 };
 
 const checkIsFullChecked = (items) => {
@@ -97,18 +63,14 @@ const checkListSlice = createSlice({
       }
       state.items = itemsCheck;
     },
-    // sendCheck: (state, action) => {
-    //   const sendData = state.items;
-    //   for(const item of sendData) {
-    //     if (item.textSolution !== "") {
-    //       item.status = SOLUTION;
-    //     }
-    //   }
-
-    // },
     changeStatus: (state, action) => {
       const { id, newStatus } = action.payload;
       const item = state.items.find((item) => item.id === id);
+      if (newStatus === OK || newStatus === EMPTY) {
+        item.textProblem = "";
+        item.textSolution = "";
+        item.status = OK;
+      }
       if (item) {
         item.status = newStatus;
         item.textProblem = "";
@@ -129,7 +91,6 @@ const checkListSlice = createSlice({
       if (item) {
         item.textSolution = newText;
       }
-      // state.isFullChecked = checkIsFullChecked(state.items);
     },
     setAllOk: (state) => {
       state.items.forEach((item) => {
@@ -149,23 +110,18 @@ const checkListSlice = createSlice({
     setErrorGetCheckTypes: (state, { payload }) => {
       state.errorSend = payload;
     },
+    setSendStatus: (state, { payload }) => {
+      state.sendStatus = payload;
+    },
   },
 });
 
 // AppThunk sets the type definitions for the dispatch method
 export const sendCheck = (room_id) => {
-  // debugger;
   return async (dispatch, getState) => {
-    const items = getState().checkList.items;
-    dispatch(setLoadingSend(true));
-    console.log("etState().checkList.items", items);
+    dispatch(setSendStatus(SENDING));
     try {
-      // for (const item of sendData) {
-      //   console.log("item", item);
-      //   if (item.textSolution !== "") {
-      //     item.status = SOLUTION;
-      //   }
-      // }
+      const items = getState().checkList.items;
       console.log("sendCheck", items);
       const res = await axios.post(
         `${import.meta.env.VITE_API_CHECKROOMS}/send-check`,
@@ -175,15 +131,16 @@ export const sendCheck = (room_id) => {
         }
       );
       console.log("sendCheck", res.data);
+      dispatch(setSendStatus(SUCCESS));
+      setTimeout(() => dispatch(setSendStatus(IDLE)), 3000);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       dispatch(setErrorSend(message));
-    } finally {
-      dispatch(setLoadingSend(false));
+      dispatch(setSendStatus(ERROR));
+      setTimeout(() => dispatch(setSendStatus(IDLE)), 3000);
     }
   };
 };
-
 export const getCheckTypes = () => {
   return async (dispatch) => {
     dispatch(setLoadingGetCheckTypes(true));
@@ -212,5 +169,6 @@ export const {
   setLoadingSend,
   setLoadingGetCheckTypes,
   setErrorGetCheckTypes,
+  setSendStatus,
 } = checkListSlice.actions;
 export default checkListSlice.reducer;

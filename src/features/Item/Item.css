@@ -53,6 +53,9 @@
 .button.problem {
     background-color: var(--bg-red);
 }
+.button.solution {
+    background-color: #2135e9;
+}
 
 textarea {
     width: 100%;
