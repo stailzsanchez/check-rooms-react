@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Item } from '../Item/Item';
 import { changeStatus, getCheckTypes, sendCheck, sendStatuses, setAllOk } from './checkListSlice';
 import { RoomNumberInput } from '../InputRoom/InputRoom';
@@ -8,8 +7,21 @@ import { useEffect } from 'react';
 
 const { IDLE, SENDING, SUCCESS, ERROR } = sendStatuses;
 
+const getStatusEmoji = (status) => {
+  switch (status) {
+    case 'PROBLEM':
+      return '❌';
+    case 'SOLUTION':
+      return '❌🔧';
+    default:
+      return '';
+  }
+};
+
 export const CheckList = () => {
-  const { items, isFullChecked, sendStatus } = useSelector((state) => state.checkList);
+  const { items, isFullChecked, sendStatus, responseData } = useSelector(
+    (state) => state.checkList,
+  );
   const { selectedRoom, isValidRoom } = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
 
@@ -63,8 +75,23 @@ export const CheckList = () => {
       {!isActiveSend && sendStatus !== SENDING && (
         <div className="warn-fields">Заполните все поля</div>
       )}
-      {sendStatus === SUCCESS && <div className="send-status success">✅ Отправлено успешно</div>}
-      {sendStatus === ERROR && <div className="send-status error">❌ Ошибка при отправке</div>}
+      {sendStatus === SUCCESS && responseData && (
+        <div className="send-status success">
+          Данные отправлены ✅ {responseData.successCount}/{responseData.totalCount}
+          {responseData.problemItems && responseData.problemItems.length > 0 && (
+            <div className="problem-items">
+              {responseData.problemItems.map((item, index) => (
+                <div key={index} className="problem-item">
+                  {item.title} {getStatusEmoji(item.status)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {sendStatus === ERROR && (
+        <div className="send-status error">❌ Ошибка при отправке: {responseData}</div>
+      )}
     </div>
   );
 };

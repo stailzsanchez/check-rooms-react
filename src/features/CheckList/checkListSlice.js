@@ -32,7 +32,8 @@ const initialState = {
   errorSend: false,
   loadingGetCheckTypes: false,
   errorGetCheckTypes: false,
-  sendStatus: IDLE
+  sendStatus: IDLE,
+  responseData: null,
 };
 
 const checkIsFullChecked = (items) => {
@@ -122,6 +123,9 @@ const checkListSlice = createSlice({
     setSendStatus: (state, { payload }) => {
       state.sendStatus = payload;
     },
+    setResponseData: (state, action) => {
+      state.responseData = action.payload;
+    },
   },
 });
 
@@ -131,7 +135,6 @@ export const sendCheck = (room_id) => {
     dispatch(setSendStatus(SENDING));
     try {
       const items = getState().checkList.items;
-      console.log("sendCheck", items);
       const res = await axios.post(
         `${import.meta.env.VITE_API_CHECKROOMS}/send-check`,
         {
@@ -139,14 +142,21 @@ export const sendCheck = (room_id) => {
           room_id: room_id,
         }
       );
-      console.log("sendCheck", res.data);
       dispatch(setSendStatus(SUCCESS));
-      setTimeout(() => dispatch(setSendStatus(IDLE)), 3000);
+      dispatch(setResponseData(res.data));
+      setTimeout(() => {
+        dispatch(setSendStatus(IDLE));
+        dispatch(setResponseData(null));
+      }, 7000);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      dispatch(setErrorSend(message));
+      const errorMessage = error.response?.data?.error || error.message || "Неизвестная ошибка";
+      dispatch(setErrorSend(errorMessage));
       dispatch(setSendStatus(ERROR));
-      setTimeout(() => dispatch(setSendStatus(IDLE)), 3000);
+      dispatch(setResponseData(errorMessage));
+      setTimeout(() => {
+        dispatch(setSendStatus(IDLE));
+        dispatch(setResponseData(null));
+      }, 7000);
     }
   };
 };
@@ -179,5 +189,6 @@ export const {
   setLoadingGetCheckTypes,
   setErrorGetCheckTypes,
   setSendStatus,
+  setResponseData,
 } = checkListSlice.actions;
 export default checkListSlice.reducer;
