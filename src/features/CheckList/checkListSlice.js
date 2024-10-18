@@ -66,14 +66,15 @@ const checkListSlice = createSlice({
     changeStatus: (state, action) => {
       const { id, newStatus } = action.payload;
       const item = state.items.find((item) => item.id === id);
-      if (newStatus === OK || newStatus === EMPTY) {
-        item.textProblem = "";
-        item.textSolution = "";
-        item.status = OK;
-      }
       if (item) {
+        if (newStatus === OK || newStatus === EMPTY) {
+          item.textProblem = "";
+          item.textSolution = "";
+        }
         item.status = newStatus;
-        item.textProblem = "";
+        // if (newStatus === PROBLEM && item.textSolution !== "") {
+        //   item.status = SOLUTION;
+        // }
       }
       state.isFullChecked = checkIsFullChecked(state.items);
     },
@@ -90,11 +91,19 @@ const checkListSlice = createSlice({
       const item = state.items.find((item) => item.id === id);
       if (item) {
         item.textSolution = newText;
+        if (newText !== "") {
+          item.status = SOLUTION;
+        } else if (item.status === SOLUTION) {
+          item.status = PROBLEM;
+        }
       }
+      state.isFullChecked = checkIsFullChecked(state.items);
     },
     setAllOk: (state) => {
       state.items.forEach((item) => {
         item.status = statuses.OK;
+        item.textProblem = "";
+        item.textSolution = "";
       });
       state.isFullChecked = checkIsFullChecked(state.items);
     },

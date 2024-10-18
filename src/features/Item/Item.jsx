@@ -7,14 +7,16 @@ import {
   statuses,
 } from '../CheckList/checkListSlice';
 import './Item.css';
+import { useRef } from 'react';
 
 const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
 
 export const Item = ({ item }) => {
   const { id, title, status, textProblem, textSolution } = item;
   const dispatch = useDispatch();
+  const textareaRef = useRef(null);
 
-  const textButtonProblem = textSolution === '' ? 'Проблема' : 'Решено';
+  const textButtonProblem = status === SOLUTION ? 'Решено' : 'Проблема';
 
   const onStatusClick = (clickStatus) => {
     let newStatus;
@@ -23,7 +25,16 @@ export const Item = ({ item }) => {
         newStatus = status !== OK ? OK : EMPTY;
         break;
       case PROBLEM:
-        newStatus = status !== PROBLEM ? PROBLEM : EMPTY;
+        if (status === PROBLEM || status === SOLUTION) {
+          newStatus = EMPTY;
+        } else {
+          newStatus = PROBLEM;
+          setTimeout(() => {
+            if (textareaRef.current) {
+              textareaRef.current.focus();
+            }
+          }, 0);
+        }
         break;
       default:
         newStatus = EMPTY;
@@ -35,20 +46,21 @@ export const Item = ({ item }) => {
     const newText = event.target.value;
     dispatch(changeTextProblem({ id, newText }));
   };
+
   const onChangeTextSolution = (event) => {
     const newText = event.target.value;
     dispatch(changeTextSolution({ id, newText }));
   };
 
   const styleOk = () => {
-    return status === statuses.OK ? 'button ok' : 'button';
+    return status === OK ? 'button ok' : 'button';
   };
 
   const styleProblem = () => {
-    if (status === PROBLEM && textSolution !== '') {
+    if (status === SOLUTION) {
       return 'button solution';
     }
-    return status === statuses.PROBLEM ? 'button problem' : 'button';
+    return status === PROBLEM ? 'button problem' : 'button';
   };
 
   return (
@@ -56,17 +68,18 @@ export const Item = ({ item }) => {
       <div className="item-content">
         <span className="item-title">{title}</span>
         <div className="button-container">
-          <button className={styleOk()} onClick={() => onStatusClick(statuses.OK)}>
+          <button className={styleOk()} onClick={() => onStatusClick(OK)}>
             ОК
           </button>
-          <button className={styleProblem()} onClick={() => onStatusClick(statuses.PROBLEM)}>
+          <button className={styleProblem()} onClick={() => onStatusClick(PROBLEM)}>
             {textButtonProblem}
           </button>
         </div>
       </div>
-      {status === statuses.PROBLEM && (
+      {(status === PROBLEM || status === SOLUTION) && (
         <>
           <textarea
+            ref={textareaRef}
             className="problem-textarea"
             value={textProblem}
             onChange={onChangeTextProblem}
