@@ -1,28 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { format } from 'date-fns';
 
 export const statuses = {
-  OK: "OK",
-  PROBLEM: "PROBLEM",
-  EMPTY: "EMPTY",
-  SOLUTION: "SOLUTION",
+  OK: 'OK',
+  PROBLEM: 'PROBLEM',
+  EMPTY: 'EMPTY',
+  SOLUTION: 'SOLUTION',
 };
 export const sendStatuses = {
-  IDLE: "IDLE",
-  SENDING: "SENDING",
-  SUCCESS: "SUCCESS",
-  ERROR: "ERROR",
+  IDLE: 'IDLE',
+  SENDING: 'SENDING',
+  SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
 };
-
 
 const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
 const { IDLE, SENDING, SUCCESS, ERROR } = sendStatuses;
 
 const initCheckTypes = {
   status: statuses.EMPTY,
-  textProblem: "",
-  textSolution: "",
-  name_admin: "stas",
+  textProblem: '',
+  textSolution: '',
+  name_admin: 'stas',
 };
 
 const initialState = {
@@ -40,10 +40,7 @@ const checkIsFullChecked = (items) => {
   let isValidReport = true;
   for (const item of items) {
     if (item.status === OK) continue;
-    if (
-      item.status === EMPTY ||
-      (item.status === PROBLEM && item.textProblem.length < 5)
-    ) {
+    if (item.status === EMPTY || (item.status === PROBLEM && item.textProblem.length < 5)) {
       isValidReport = false;
       break;
     }
@@ -52,8 +49,29 @@ const checkIsFullChecked = (items) => {
   return isValidReport;
 };
 
+export const exportChecks = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_CHECKROOMS}/export-checks`, {
+        responseType: 'blob',
+      });
+      const formattedDate = format(new Date(), 'HH.mm_dd-MM-yyyy');
+      const fileName = `checksCU_${formattedDate}.xlsx`;
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('Ошибка при экспорте проверок:', error);
+    }
+  };
+};
+
 const checkListSlice = createSlice({
-  name: "checkList",
+  name: 'checkList',
   initialState,
   reducers: {
     initItemsWithTypes: (state, action) => {
@@ -69,8 +87,8 @@ const checkListSlice = createSlice({
       const item = state.items.find((item) => item.id === id);
       if (item) {
         if (newStatus === OK || newStatus === EMPTY) {
-          item.textProblem = "";
-          item.textSolution = "";
+          item.textProblem = '';
+          item.textSolution = '';
         }
         item.status = newStatus;
         // if (newStatus === PROBLEM && item.textSolution !== "") {
@@ -92,7 +110,7 @@ const checkListSlice = createSlice({
       const item = state.items.find((item) => item.id === id);
       if (item) {
         item.textSolution = newText;
-        if (newText !== "") {
+        if (newText !== '') {
           item.status = SOLUTION;
         } else if (item.status === SOLUTION) {
           item.status = PROBLEM;
@@ -103,8 +121,8 @@ const checkListSlice = createSlice({
     setAllOk: (state) => {
       state.items.forEach((item) => {
         item.status = statuses.OK;
-        item.textProblem = "";
-        item.textSolution = "";
+        item.textProblem = '';
+        item.textSolution = '';
       });
       state.isFullChecked = checkIsFullChecked(state.items);
     },
@@ -135,13 +153,10 @@ export const sendCheck = (room_id) => {
     dispatch(setSendStatus(SENDING));
     try {
       const items = getState().checkList.items;
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_CHECKROOMS}/send-check`,
-        {
-          items: items,
-          room_id: room_id,
-        }
-      );
+      const res = await axios.post(`${import.meta.env.VITE_API_CHECKROOMS}/send-check`, {
+        items: items,
+        room_id: room_id,
+      });
       dispatch(setSendStatus(SUCCESS));
       dispatch(setResponseData(res.data));
       setTimeout(() => {
@@ -149,7 +164,7 @@ export const sendCheck = (room_id) => {
         dispatch(setResponseData(null));
       }, 7000);
     } catch (error) {
-      const errorMessage = error.response?.data?.error || error.message || "Неизвестная ошибка";
+      const errorMessage = error.response?.data?.error || error.message || 'Неизвестная ошибка';
       dispatch(setErrorSend(errorMessage));
       dispatch(setSendStatus(ERROR));
       dispatch(setResponseData(errorMessage));
@@ -164,13 +179,11 @@ export const getCheckTypes = () => {
   return async (dispatch) => {
     dispatch(setLoadingGetCheckTypes(true));
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_CHECKROOMS}/get-check-types`
-      );
+      const res = await axios.get(`${import.meta.env.VITE_API_CHECKROOMS}/get-check-types`);
       dispatch(initItemsWithTypes(res.data));
-      console.log("get-check-types", res.data);
+      console.log('get-check-types', res.data);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       dispatch(setErrorGetCheckTypes(message));
     } finally {
       dispatch(setLoadingGetCheckTypes(false));

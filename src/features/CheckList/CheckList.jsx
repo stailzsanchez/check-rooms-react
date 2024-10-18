@@ -1,6 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Item } from '../Item/Item';
-import { changeStatus, getCheckTypes, sendCheck, sendStatuses, setAllOk } from './checkListSlice';
+import {
+  changeStatus,
+  exportChecks,
+  getCheckTypes,
+  sendCheck,
+  sendStatuses,
+  setAllOk,
+} from './checkListSlice';
 import { RoomNumberInput } from '../InputRoom/InputRoom';
 import './CheckList.css';
 import { useEffect } from 'react';
@@ -70,6 +77,9 @@ export const CheckList = () => {
         </button>
         <button className="check-list__button select-all" onClick={onAllOkClick}>
           ✅ Отметить все
+        </button>
+        <button className="check-list__button export" onClick={() => dispatch(exportChecks())}>
+          📊 Экспорт
         </button>
       </div>
       {!isActiveSend && sendStatus !== SENDING && (

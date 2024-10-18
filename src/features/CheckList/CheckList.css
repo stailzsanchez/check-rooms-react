@@ -131,3 +131,12 @@
   .problem-item {
     margin-bottom: 5px;
   }
+
+  .check-list__button.export {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .check-list__button.export:hover {
+    background-color: #45a049;
+  }
