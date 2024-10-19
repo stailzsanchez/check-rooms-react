@@ -7,23 +7,21 @@ import {
   sendCheck,
   sendStatuses,
   setAllOk,
+  statuses,
 } from './checkListSlice';
 import { RoomNumberInput } from '../InputRoom/InputRoom';
 import './CheckList.css';
 import { useEffect } from 'react';
 
 const { IDLE, SENDING, SUCCESS, ERROR } = sendStatuses;
+const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
 
-const getStatusEmoji = (status) => {
-  switch (status) {
-    case 'PROBLEM':
-      return '❌';
-    case 'SOLUTION':
-      return '❌🔧';
-    default:
-      return '';
-  }
+const statusEmojis = {
+  [PROBLEM]: '❌',
+  [SOLUTION]: '🔧',
 };
+
+const getStatusEmoji = (status) => statusEmojis[status] || '';
 
 export const CheckList = () => {
   const { items, isFullChecked, sendStatus, responseData } = useSelector(
@@ -76,7 +74,7 @@ export const CheckList = () => {
           )}
         </button>
         <button className="check-list__button select-all" onClick={onAllOkClick}>
-          ✅ Отметить все
+          ✅ Всё ок
         </button>
         <button className="check-list__button export" onClick={() => dispatch(exportChecks())}>
           📊 Экспорт
@@ -87,7 +85,7 @@ export const CheckList = () => {
       )}
       {sendStatus === SUCCESS && responseData && (
         <div className="send-status success">
-          Данные отправлены ✅ {responseData.successCount}/{responseData.totalCount}
+          Данные отправлены {responseData.roomName}✅ {responseData.successCount}/{responseData.totalCount}
           {responseData.problemItems && responseData.problemItems.length > 0 && (
             <div className="problem-items">
               {responseData.problemItems.map((item, index) => (
