@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './UserManagement.css';
 import api from 'app/api/api';
+import { useAuth } from '../../app/providers/auth/AuthContext';
 
 const initialUser = { login: '', password: '', role: 'user' };
 
 export const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState(initialUser);
-
+    const { user: userAuth } = useAuth();
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -42,6 +43,27 @@ export const UserManagement = () => {
             console.error('Ошибка при удалении пользователя:', error);
         }
     };
+
+    const usersUI = users.map(user => {
+        const canBeDeleted = user.login !== 'admin' && user.id !== userAuth.id;
+        return (
+            <tr key={user.id}>
+                <td>{user.login}</td>
+                <td>{user.role}</td>
+                <td>
+                    {canBeDeleted && (
+                        <button
+                            onClick={() => handleDeleteUser(user.id)}
+                            className="delete-button"
+                        >
+                            Удалить
+                        </button>
+                    )}
+                </td>
+            </tr>
+        )
+    });
+
 
     return (
         <div className="user-management">
@@ -79,22 +101,7 @@ export const UserManagement = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.login}</td>
-                            <td>{user.role}</td>
-                            <td>
-                                {
-                                    user.login !== 'admin' &&
-                                    <button onClick={() => handleDeleteUser(user.id)}
-                                        className="delete-button"
-                                    >
-                                        Удалить
-                                    </button>
-                                }
-                            </td>
-                        </tr>
-                    ))}
+                    {usersUI}
                 </tbody>
             </table>
         </div>

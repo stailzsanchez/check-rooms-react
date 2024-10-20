@@ -16,7 +16,11 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post('/auth/login', { login, password });
             localStorage.setItem('token', response.data.token);
             setIsAuthenticated(true);
-            setUser({ role: response.data.role });
+            setUser({
+                role: response.data.role,
+                login: response.data.login,
+                id: response.data.id
+            });
             navigate(AppRoutes.MAIN);
             return response.data;
         } catch (error) {
@@ -39,7 +43,13 @@ export const AuthProvider = ({ children }) => {
                     headers: { 'x-auth-token': token }
                 });
                 setIsAuthenticated(true);
-                setUser({ role: response.data.user.role });
+                setUser(
+                    {
+                        role: response.data.user.role,
+                        id: response.data.user.id,
+                        login: response.data.user.login
+                    }
+                );
             } catch (error) {
                 localStorage.removeItem('token');
             }
