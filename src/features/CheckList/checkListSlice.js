@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../../app/api/api';
 import { format } from 'date-fns';
 
 export const statuses = {
@@ -52,7 +52,7 @@ const checkIsFullChecked = (items) => {
 export const exportChecks = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_CHECKROOMS}/export-checks`, {
+      const response = await api.get(`/export-checks`, {
         responseType: 'blob',
       });
       const formattedDate = format(new Date(), 'HH.mm_dd-MM-yyyy');
@@ -153,10 +153,7 @@ export const sendCheck = (room_id) => {
     dispatch(setSendStatus(SENDING));
     try {
       const items = getState().checkList.items;
-      const res = await axios.post(`${import.meta.env.VITE_API_CHECKROOMS}/send-check`, {
-        items: items,
-        room_id: room_id,
-      });
+      const res = await api.post(`/send-check`, {items,room_id});
       dispatch(setSendStatus(SUCCESS));
       dispatch(setResponseData(res.data));
       setTimeout(() => {
@@ -179,7 +176,7 @@ export const getCheckTypes = () => {
   return async (dispatch) => {
     dispatch(setLoadingGetCheckTypes(true));
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_CHECKROOMS}/get-check-types`);
+      const res = await api.get(`/get-check-types`);
       dispatch(initItemsWithTypes(res.data));
       console.log('get-check-types', res.data);
     } catch (error) {

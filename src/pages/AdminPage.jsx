@@ -1,7 +1,11 @@
+import React from 'react';
+import { UserManagement } from '../features/UserManagement/UserManagement';
+
 export const AdminPage = () => {
   return (
     <div>
-      <h1>AdminPage</h1>
+      <h1>Панель администратора</h1>
+      <UserManagement />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../app/api/api";
 
 const roomSlice = createSlice({
   name: "rooms",
@@ -55,12 +55,7 @@ export const getRooms = (searchText) => {
   return async (dispatch) => {
     dispatch(setLoadingRooms(true));
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_CHECKROOMS}/rooms`,
-        {
-          searchText: searchText,
-        }
-      );
+      const res = await api.post(`/rooms`, { searchText });
       dispatch(setRooms(res.data));
       // console.log("searchText", searchText);
       // console.log("getRooms", res.data);

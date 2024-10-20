@@ -1,6 +1,6 @@
 import { CheckList } from '../features/CheckList/CheckList';
 
-export const MainPage = () => {
+export const ChecksPage = () => {
   return (
     <div>
       <CheckList />
