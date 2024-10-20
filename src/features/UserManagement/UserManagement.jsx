@@ -67,11 +67,11 @@ export const UserManagement = () => {
 
     return (
         <div className="user-management">
-            <h2>Управление пользователями</h2>
+            <h2 className="user-management-title">Управление пользователями</h2>
             <form onSubmit={handleAddUser} className="add-user-form">
                 <input
                     type="text"
-                    placeholder="Логин пользователя"
+                    placeholder="Логин"
                     value={newUser.login}
                     onChange={(e) => setNewUser({ ...newUser, login: e.target.value })}
                     required

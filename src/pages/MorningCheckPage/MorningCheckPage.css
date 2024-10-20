@@ -1,0 +1,43 @@
+.morning-check-setup {
+    padding: 20px;
+}
+
+.morning-check-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.room-list-title {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+
+.room-list {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.room-separator {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.room-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}

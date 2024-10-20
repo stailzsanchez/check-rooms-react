@@ -1,13 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import { routeConfig } from './routerConfig';
-import { useAuth } from '../auth/AuthContext';
+// import { useAuth } from '../auth/AuthContext';
 
 export const AppRouter = () => {
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
+  // if (!isAuthenticated) {
+  //   return <LoginPage />;
+  // }
 
   return (
     <Routes>

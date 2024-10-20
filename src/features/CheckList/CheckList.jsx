@@ -55,7 +55,7 @@ export const CheckList = () => {
 
       <div className="items">
         {items.map((item) => (
-          <Item key={item.title} item={item} onChangeStatus={onChangeStatus} />
+          <Item key={item.id} item={item} onChangeStatus={onChangeStatus} />
         ))}
       </div>
       <div className="check-list__controls">

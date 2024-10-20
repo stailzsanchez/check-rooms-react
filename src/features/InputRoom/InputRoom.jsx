@@ -3,19 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
 import "./InputRoom.css";
 
-export const RoomNumberInput = () => {
+export const RoomNumberInput = ({ onSelect }) => {
   const dispatch = useDispatch();
   const { rooms, isValidRoom, selectedRoom } = useSelector(
     (state) => state.rooms
   );
   const [inputValue, setInputValue] = useState("");
   const [showOptions, setShowOptions] = useState(false);
-
-  const lastCheckTime = selectedRoom.date?.split(" ")[1];
-  const lastCheckDate = selectedRoom.date?.split(" ")[0];
-  const lastCheckNameAdmin = selectedRoom?.name_admin;
-
-  // console.log(selectedRoom);
 
   const onInputChange = (event) => {
     const inputText = event.target.value;
@@ -30,23 +24,16 @@ export const RoomNumberInput = () => {
     dispatch(setIsValidRoom(isValid));
   };
 
-  const handleRoomSelect = (roomName) => {
-    setInputValue(roomName);
-    isValidInput(roomName);
+  const handleRoomSelect = (room) => {
+    setInputValue(room.name);
+    isValidInput(room.name);
     setShowOptions(false);
-    dispatch(setSelectedRoom(roomName));
+    dispatch(setSelectedRoom(room.name));
+    onSelect(room);
   };
-
-  const LastCheckUI = !!lastCheckDate && (
-    <div className="last-check__wrap">
-      {`Последняя проверка ${lastCheckTime} ${lastCheckDate} ${lastCheckNameAdmin}`}
-    </div>
-  );
 
   return (
     <div className="room-select">
-      {/* <label htmlFor="roomSelect"></label> */}
-      {LastCheckUI}
       <input
         type="text"
         id="roomSelect"
@@ -67,7 +54,7 @@ export const RoomNumberInput = () => {
               <div
                 key={room.id}
                 className="option"
-                onClick={() => handleRoomSelect(room.name)}
+                onClick={() => handleRoomSelect(room)}
               >
                 {room.name}
               </div>
