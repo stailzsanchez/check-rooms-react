@@ -1,25 +1,29 @@
-import { AdminPage } from 'pages/AdminPage';
+import { AdminPage } from '../../../pages/AdminPage';
 import { ChecksPage } from '../../../pages/ChecksPage';
 import { LoginPage } from '../../../pages/LoginPage/LoginPage';
-import { PrivateRoute } from './PrivateRoute';
 
-const MAIN = '/';
-const ADMIN_PAGE = '/admin';
-const CHECKS_PAGE = '/checks';
-const LOGIN_PAGE = '/login';
+
+export const AppRoutes = {
+  MAIN: '/',
+  ADMIN_PAGE: '/admin',
+  CHECKS_PAGE: '/checks',
+  LOGIN_PAGE: '/login',
+}
+
+const { MAIN, ADMIN_PAGE, CHECKS_PAGE, LOGIN_PAGE } = AppRoutes;
 
 export const routeConfig = {
   [MAIN]: {
     path: MAIN,
-    element: (<PrivateRoute><ChecksPage /></PrivateRoute>),
+    element: (<ChecksPage />),
   },
   [ADMIN_PAGE]: {
     path: ADMIN_PAGE,
-    element: (<PrivateRoute><AdminPage /></PrivateRoute>),
+    element: (<AdminPage />),
   },
   [CHECKS_PAGE]: {
     path: CHECKS_PAGE,
-    element: (<PrivateRoute><ChecksPage /></PrivateRoute>),
+    element: (<ChecksPage />),
   },
   [LOGIN_PAGE]: {
     path: LOGIN_PAGE,
