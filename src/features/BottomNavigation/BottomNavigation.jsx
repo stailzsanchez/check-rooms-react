@@ -2,14 +2,20 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './BottomNavigation.css';
+import { useAuth } from '../../app/providers/auth/AuthContext';
 
 const BottomNavigation = () => {
     const location = useLocation();
+    const { user } = useAuth();
+    console.log("BottomNavigation user", user);
 
     const navItems = [
         { path: '/checks', icon: '🏠', label: 'Проверки' },
-        { path: '/admin', icon: '👤', label: 'Админ' }
     ];
+
+    if (user && user.role === 'admin') {
+        navItems.push({ path: '/admin', icon: '👤', label: 'Админ' });
+    }
 
     return (
         <nav className="bottom-nav">

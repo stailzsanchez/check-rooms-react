@@ -84,7 +84,14 @@ export const UserManagement = () => {
                             <td>{user.login}</td>
                             <td>{user.role}</td>
                             <td>
-                                <button onClick={() => handleDeleteUser(user.id)} className="delete-button">Удалить</button>
+                                {
+                                    user.login !== 'admin' &&
+                                    <button onClick={() => handleDeleteUser(user.id)}
+                                        className="delete-button"
+                                    >
+                                        Удалить
+                                    </button>
+                                }
                             </td>
                         </tr>
                     ))}
