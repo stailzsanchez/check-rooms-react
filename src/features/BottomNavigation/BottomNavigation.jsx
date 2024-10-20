@@ -6,37 +6,33 @@ import './BottomNavigation.css';
 const BottomNavigation = () => {
     const location = useLocation();
 
+    const navItems = [
+        { path: '/checks', icon: '🏠', label: 'Проверки' },
+        { path: '/admin', icon: '👤', label: 'Админ' }
+    ];
+
     return (
         <nav className="bottom-nav">
-            {['/checks', '/admin'].map((path, index) => (
-                <Link to={path} key={path} className="nav-item">
+            {navItems.map((item) => (
+                <Link to={item.path} key={item.path} className="nav-item">
                     <motion.div
-                        className={`nav-icon ${location.pathname === path ? 'active' : ''}`}
+                        className={`nav-icon ${location.pathname === item.path ? 'active' : ''}`}
+                        whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
-                        <i className={`fas ${getIcon(index)}`}></i>
+                        {item.icon}
                     </motion.div>
-                    <motion.span
+                    {/* <motion.span
                         initial={{ y: 10, opacity: 0 }}
-                        animate={{ y: location.pathname === path ? 0 : 10, opacity: location.pathname === path ? 1 : 0 }}
+                        animate={{ y: location.pathname === item.path ? 0 : 10, opacity: location.pathname === item.path ? 1 : 0 }}
                         transition={{ duration: 0.2 }}
                     >
-                        {getLabel(index)}
-                    </motion.span>
+                        {item.label}
+                    </motion.span> */}
                 </Link>
             ))}
         </nav>
     );
-};
-
-const getIcon = (index) => {
-    const icons = ['fa-home', 'fa-clipboard-check', 'fa-user-cog'];
-    return icons[index];
-};
-
-const getLabel = (index) => {
-    const labels = ['Проверки', 'Админ'];
-    return labels[index];
 };
 
 export default BottomNavigation;

@@ -15,23 +15,23 @@
     max-width: 400px;
 }
 
-h2 {
+.login-form__title {
     text-align: center;
     color: #333;
     margin-bottom: 1.5rem;
 }
 
-.form-group {
+.login-form__group {
     margin-bottom: 1rem;
 }
 
-label {
+.login-form__label {
     display: block;
     margin-bottom: 0.5rem;
     color: #555;
 }
 
-input {
+.login-form__input {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ddd;
@@ -39,13 +39,13 @@ input {
     font-size: 1rem;
 }
 
-input:focus {
+.login-form__input:focus {
     outline: none;
     border-color: #4a90e2;
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
-button {
+.login-form__button {
     width: 100%;
     padding: 0.75rem;
     background-color: #4a90e2;
@@ -57,16 +57,16 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.login-form__button:hover {
     background-color: #3a7bc8;
 }
 
-button:disabled {
+.login-form__button:disabled {
     background-color: #a0c3e8;
     cursor: not-allowed;
 }
 
-.error-message {
+.login-form__error-message {
     background-color: #ffebee;
     color: #d32f2f;
     padding: 0.75rem;
@@ -75,7 +75,7 @@ button:disabled {
     text-align: center;
 }
 
-.loader {
+.login-form__loader {
     border: 2px solid #f3f3f3;
     border-top: 2px solid #3498db;
     border-radius: 50%;

@@ -1,6 +1,6 @@
-import { AdminPage } from '../../../pages/AdminPage';
-import { ChecksPage } from '../../../pages/ChecksPage';
-import { LoginPage } from '../../../pages/LoginPage/LoginPage';
+import { AdminPage } from 'pages/AdminPage';
+import { ChecksPage } from 'pages/ChecksPage';
+import { LoginPage } from 'pages/LoginPage/LoginPage';
 
 
 export const AppRoutes = {

@@ -37,18 +37,6 @@ export const RoomNumberInput = () => {
     dispatch(setSelectedRoom(roomName));
   };
 
-  // const LastCheckUI = !!selectedRoom.id && (
-  //   <div className="last-check__wrap">
-  //     <span className="last-check__time">
-  //       {selectedRoom.date.split(" ")[1]}
-  //     </span>
-  //     <span className="last-check__date">
-  //       {selectedRoom.date.split(" ")[0]}
-  //     </span>
-  //     <span className="last-check__admin">{selectedRoom.name_admin}</span>
-  //   </div>
-  // );
-
   const LastCheckUI = !!lastCheckDate && (
     <div className="last-check__wrap">
       {`Последняя проверка ${lastCheckTime} ${lastCheckDate} ${lastCheckNameAdmin}`}

@@ -103,7 +103,6 @@ Item.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    // check_type_id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
     textProblem: PropTypes.string,
     textSolution: PropTypes.string,

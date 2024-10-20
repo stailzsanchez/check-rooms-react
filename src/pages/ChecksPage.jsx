@@ -1,4 +1,4 @@
-import { CheckList } from '../features/CheckList/CheckList';
+import { CheckList } from 'features/CheckList/CheckList';
 
 export const ChecksPage = () => {
   return (

@@ -4,7 +4,7 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 550px;
+  max-width: var(--app-container-width);
   margin: 0 auto;
 }
 
@@ -12,31 +12,47 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  gap: 10px;
 }
 
-.check-list__button {
+.check-list__button-send,
+.check-list__button-all-ok,
+.check-list__button-export {
   color: white;
   border: none;
+  width: 100%;
   border-radius: 5px;
   padding: 10px 15px;
   cursor: pointer;
-  background-color: rgb(197, 189, 192);
   transition: background-color 0.3s;
-  cursor: initial;
 }
 
-.check-list__button.active {
+.check-list__button-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .check-list__button-send {
+  background-color: rgb(197, 189, 192);
+  cursor: not-allowed;
+} */
+
+.check-list__button-send.active {
   background-color: #4CAF50;
-  color: white;
   cursor: pointer;
 }
 
-.check-list__button.active:hover {
+.check-list__button-send.active:hover {
   background-color: #45a049;
 }
 
-.check-list__button.select-all {
+.check-list__button-all-ok {
   background-color: #5589c4;
+}
+
+.check-list__button-export {
+  background-color: #f0ad4e;
 }
 
 .items {
@@ -91,11 +107,7 @@
   }
 }
 
-.check-list__button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .button-loader {
   border: 2px solid #f3f3f3;
@@ -107,10 +119,10 @@
   margin-left: 10px;
 }
 
-.check-list__button:disabled {
+/* .check-list__button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-}
+} */
 
 .send-status {
   margin-top: 15px;
@@ -138,6 +150,7 @@
   margin-bottom: 5px;
 }
 
+/* 
 .check-list__button.export {
   background-color: #4CAF50;
   color: white;
@@ -145,4 +158,4 @@
 
 .check-list__button.export:hover {
   background-color: #45a049;
-}
+} */

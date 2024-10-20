@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import api from '../../app/api/api';
+import api from 'app/api/api';
 import { format } from 'date-fns';
 
 export const statuses = {

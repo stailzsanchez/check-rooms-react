@@ -1,11 +1,9 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './providers/auth/AuthContext';
-import { LoginPage } from '../pages/LoginPage/LoginPage';
-import { AdminPage } from '../pages/AdminPage';
-import { ChecksPage } from '../pages/ChecksPage';
-import './style/index.css';
 import { AppRouter } from './providers/router/AppRouter';
+import { LoginPage } from 'pages/LoginPage/LoginPage';
+import BottomNavigation from 'features/BottomNavigation/BottomNavigation';
+import './style/index.css';
 
 export const App = () => {
   const { isAuthenticated } = useAuth();
@@ -13,6 +11,11 @@ export const App = () => {
     return <LoginPage />;
   }
   return (
-    <AppRouter />
+    <div className="app-container">
+      <div className="app-content">
+        <AppRouter />
+      </div>
+      <BottomNavigation />
+    </div>
   );
 };

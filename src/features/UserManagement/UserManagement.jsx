@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './UserManagement.css';
-import api from '../../app/api/api';
+import api from 'app/api/api';
 
 const initialUser = { login: '', password: '', role: 'user' };
 

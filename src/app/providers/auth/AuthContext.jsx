@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/api';
-
+import { AppRoutes } from '../router/routerConfig';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -9,30 +9,12 @@ export const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    await api.get('/auth/verify', {
-                        headers: { 'x-auth-token': token }
-                    });
-                    setIsAuthenticated(true);
-                } catch (error) {
-                    localStorage.removeItem('token');
-                }
-            }
-            setIsLoading(false);
-        };
-        checkAuth();
-    }, []);
-
     const login = async (login, password) => {
         try {
             const response = await api.post('/auth/login', { login, password });
             localStorage.setItem('token', response.data.token);
             setIsAuthenticated(true);
-            navigate('/');
+            navigate(AppRoutes.MAIN);
         } catch (error) {
             throw error;
         }
@@ -41,8 +23,29 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('token');
         setIsAuthenticated(false);
-        navigate('/login');
+        navigate(AppRoutes.LOGIN_PAGE);
     };
+
+    const checkAuth = async () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                await api.get('/auth/verify', {
+                    headers: { 'x-auth-token': token }
+                });
+                setIsAuthenticated(true);
+            } catch (error) {
+                localStorage.removeItem('token');
+            }
+        }
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+
 
     if (isLoading) {
         return <div>Loading...</div>;

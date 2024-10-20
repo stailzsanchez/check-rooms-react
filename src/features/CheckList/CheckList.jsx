@@ -61,7 +61,7 @@ export const CheckList = () => {
       <div className="check-list__controls">
         <button
           onClick={onSendData}
-          className={`check-list__button ${isActiveSend ? 'active' : ''}`}
+          className={`check-list__button-send ${isActiveSend ? 'active' : ''}`}
           disabled={sendStatus === SENDING}
         >
           {sendStatus === SENDING ? (
@@ -73,12 +73,12 @@ export const CheckList = () => {
             'Отправить'
           )}
         </button>
-        <button className="check-list__button select-all" onClick={onAllOkClick}>
+        <button className="check-list__button-all-ok" onClick={onAllOkClick}>
           ✅ Всё ок
         </button>
-        <button className="check-list__button export" onClick={() => dispatch(exportChecks())}>
+        {/* <button className="check-list__button-export" onClick={() => dispatch(exportChecks())}>
           📊 Экспорт
-        </button>
+        </button> */}
       </div>
       {!isActiveSend && sendStatus !== SENDING && (
         <div className="warn-fields">Заполните все поля</div>

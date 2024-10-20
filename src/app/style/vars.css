@@ -1,4 +1,6 @@
 :root {
     --bg-red: #f44336;
     --text-red: #f44336;
+
+    --app-container-width: 1000px;
 }

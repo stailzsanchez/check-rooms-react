@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
-import { useAuth } from '../../app/providers/auth/AuthContext';
+import { useAuth } from 'app/providers/auth/AuthContext';
 
 export const LoginPage = () => {
     const [login, setLogin] = useState('');
@@ -26,10 +26,10 @@ export const LoginPage = () => {
     return (
         <div className="login-page">
             <form onSubmit={handleLogin} className="login-form">
-                <h2>Вход в систему</h2>
-                {error && <div className="error-message">{error}</div>}
-                <div className="form-group">
-                    <label htmlFor="login">Логин</label>
+                <h2 className="login-form__title">Вход в систему</h2>
+                {error && <div className="login-form__error-message">{error}</div>}
+                <div className="login-form__group">
+                    <label htmlFor="login" className="login-form__label">Логин</label>
                     <input
                         id="login"
                         type="text"
@@ -37,10 +37,11 @@ export const LoginPage = () => {
                         value={login}
                         onChange={(e) => setLogin(e.target.value)}
                         required
+                        className="login-form__input"
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Пароль</label>
+                <div className="login-form__group">
+                    <label htmlFor="password" className="login-form__label">Пароль</label>
                     <input
                         id="password"
                         type="password"
@@ -48,11 +49,12 @@ export const LoginPage = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className="login-form__input"
                     />
                 </div>
-                <button type="submit" disabled={isLoading}>
+                <button type="submit" disabled={isLoading} className="login-form__button">
                     {isLoading ? (
-                        <div className="loader"></div>
+                        <div className="login-form__loader"></div>
                     ) : (
                         'Войти'
                     )}
