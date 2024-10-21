@@ -16,10 +16,13 @@ const roomSlice = createSlice({
     },
     setSelectedRoom: (state, action) => {
       const selectedRoomName = action.payload;
+      console.log('selectedRoomName', selectedRoomName);
       const foundRoom = state.rooms.find(
         (room) => room.name === selectedRoomName
       );
       if (!foundRoom) state.selectedRoom = {};
+      console.log('foundRoom', foundRoom);
+      
       state.selectedRoom = foundRoom;
     },
     setIsValidRoom: (state, action) => {

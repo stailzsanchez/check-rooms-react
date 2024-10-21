@@ -4,7 +4,6 @@ import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
 import "./InputRoom.css";
 
 export const RoomNumberInput = () => {
-  // export const RoomNumberInput = ({ onSelect }) => {
   const dispatch = useDispatch();
   const { rooms, isValidRoom, selectedRoom } = useSelector(
     (state) => state.rooms
@@ -29,8 +28,8 @@ export const RoomNumberInput = () => {
     setInputValue(room.name);
     isValidInput(room.name);
     setShowOptions(false);
-    dispatch(setSelectedRoom(room.name));
-    // onSelect(room);
+    dispatch(setSelectedRoom(room));
+    console.log('handleRoomSelect room', room);
   };
 
   return (
@@ -66,6 +65,14 @@ export const RoomNumberInput = () => {
       {!isValidRoom && (
         <div className="warn-room">Выберите существующий кабинет</div>
       )}
+
+      {selectedRoom && (
+        <div className="last-check-info">
+          <h3>Последняя проверка:</h3>
+          <p>Дата: {selectedRoom.last_check_date ? new Date(selectedRoom.last_check_date).toLocaleString() : 'Нет данных'}</p>
+          <p>Проверил: {selectedRoom.last_check_user_name || 'Нет данных'}</p>
+        </div>
+      )}
     </div>
   );
-};
+}

@@ -143,17 +143,17 @@ const checkListSlice = createSlice({
     setResponseData: (state, action) => {
       state.responseData = action.payload;
     },
-    resetState: (state, action) => {
-      state.responseData = null;
-      state.isFullChecked = false;
-      state.loadingSend = false;
-      state.errorSend = false;
-      state.loadingGetCheckTypes = false;
-      state.errorGetCheckTypes = false;
-      state.sendStatus = IDLE;
-      state.responseData = null;
+    // resetState: (state, action) => {
+    //   state.responseData = null;
+    //   state.isFullChecked = false;
+    //   state.loadingSend = false;
+    //   state.errorSend = false;
+    //   state.loadingGetCheckTypes = false;
+    //   state.errorGetCheckTypes = false;
+    //   state.sendStatus = IDLE;
+    //   state.responseData = null;
 
-    },
+    // },
   },
 });
 
