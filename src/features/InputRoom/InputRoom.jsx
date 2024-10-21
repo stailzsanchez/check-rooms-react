@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
 import "./InputRoom.css";
 
-export const RoomNumberInput = ({ onSelect }) => {
+export const RoomNumberInput = () => {
+  // export const RoomNumberInput = ({ onSelect }) => {
   const dispatch = useDispatch();
   const { rooms, isValidRoom, selectedRoom } = useSelector(
     (state) => state.rooms
@@ -29,7 +30,7 @@ export const RoomNumberInput = ({ onSelect }) => {
     isValidInput(room.name);
     setShowOptions(false);
     dispatch(setSelectedRoom(room.name));
-    onSelect(room);
+    // onSelect(room);
   };
 
   return (

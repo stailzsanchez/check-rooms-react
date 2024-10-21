@@ -22,7 +22,6 @@ const initCheckTypes = {
   status: statuses.EMPTY,
   textProblem: '',
   textSolution: '',
-  name_admin: 'stas',
 };
 
 const initialState = {
@@ -144,16 +143,27 @@ const checkListSlice = createSlice({
     setResponseData: (state, action) => {
       state.responseData = action.payload;
     },
+    resetState: (state, action) => {
+      state.responseData = null;
+      state.isFullChecked = false;
+      state.loadingSend = false;
+      state.errorSend = false;
+      state.loadingGetCheckTypes = false;
+      state.errorGetCheckTypes = false;
+      state.sendStatus = IDLE;
+      state.responseData = null;
+
+    },
   },
 });
 
 // AppThunk sets the type definitions for the dispatch method
-export const sendCheck = (room_id) => {
+export const sendCheck = (room_id, login) => {
   return async (dispatch, getState) => {
     dispatch(setSendStatus(SENDING));
     try {
       const items = getState().checkList.items;
-      const res = await api.post(`/send-check`, {items,room_id});
+      const res = await api.post(`/send-check`, { items, room_id, login });
       dispatch(setSendStatus(SUCCESS));
       dispatch(setResponseData(res.data));
       setTimeout(() => {

@@ -13,13 +13,14 @@ const BottomNavigation = () => {
 
     const navItems = [
         { path: AppRoutes.MAIN, icon: '✅', label: 'Проверки' },
+        { path: AppRoutes.MORNING_CHECK_LIST, icon: '🌞', label: 'Утренняя проверка' },
+        { path: AppRoutes.SETTINGS_PAGE, icon: '⚙️', label: 'Настройки' },
+
 
     ];
 
     if (user && user.role === 'admin') {
         navItems.push(
-            { path: AppRoutes.MORNING_CHECK_ROOMS, icon: '🌞', label: 'Утренняя проверка' },
-            { path: AppRoutes.SETTINGS_PAGE, icon: '⚙️', label: 'Настройки' },
             { path: AppRoutes.ADMIN_PAGE, icon: '👤', label: 'Админ' },
         );
     }
@@ -28,13 +29,13 @@ const BottomNavigation = () => {
         <nav className="bottom-nav">
             {navItems.map((item) => (
                 <Link to={item.path} key={item.path + item.label} className="nav-item">
-                    <motion.div
+                    <div
                         className={`nav-icon ${location.pathname === item.path ? 'active' : ''}`}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                    // whileHover={{ scale: 1.1 }}
+                    // whileTap={{ scale: 0.9 }}
                     >
                         {item.icon}
-                    </motion.div>
+                    </div>
                 </Link>
             ))}
         </nav>

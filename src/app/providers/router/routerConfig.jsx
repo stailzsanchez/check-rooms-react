@@ -3,6 +3,7 @@ import { ChecksPage } from 'pages/ChecksPage';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { MorningCheckPage } from 'pages/MorningCheckPage/MorningCheckPage';
 import { SettingsPage } from 'pages/SettingPage/SettingsPage';
+import { MorningCheckList } from 'pages/MorningCheckList/MorningCheckList';
 
 
 export const AppRoutes = {
@@ -12,9 +13,10 @@ export const AppRoutes = {
   LOGIN_PAGE: '/login',
   SETTINGS_PAGE: '/settings',
   MORNING_CHECK_ROOMS: '/morning-check-rooms',
+  MORNING_CHECK_LIST: '/morning-check-list',
 }
 
-const { MAIN, ADMIN_PAGE, CHECKS_PAGE, LOGIN_PAGE, SETTINGS_PAGE, MORNING_CHECK_ROOMS } = AppRoutes;
+const { MAIN, ADMIN_PAGE, CHECKS_PAGE, LOGIN_PAGE, SETTINGS_PAGE, MORNING_CHECK_ROOMS, MORNING_CHECK_LIST } = AppRoutes;
 
 export const routeConfig = {
   [MAIN]: {
@@ -40,5 +42,9 @@ export const routeConfig = {
   [MORNING_CHECK_ROOMS]: {
     path: MORNING_CHECK_ROOMS,
     element: (<MorningCheckPage />),
+  },
+  [MORNING_CHECK_LIST]: {
+    path: MORNING_CHECK_LIST,
+    element: (<MorningCheckList />),
   },
 };

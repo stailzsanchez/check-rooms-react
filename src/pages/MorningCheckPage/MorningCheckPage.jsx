@@ -29,7 +29,7 @@ export const MorningCheckPage = () => {
 
     return (
         <div className="morning-check-setup">
-            <h1 className="morning-check-title">Настройка утренней проверки</h1>
+            <h1 className="morning-check-setup-title">Настройка утренней проверки</h1>
             <div className="room-list">
                 <h2 className="room-list-title">Добавлены в утреннюю проверку</h2>
                 {rooms.filter(room => room.is_morning_check).map(room => (

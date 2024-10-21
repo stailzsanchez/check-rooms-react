@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Item } from '../Item/Item';
+import './CheckList.css';
 import {
   changeStatus,
   exportChecks,
@@ -10,8 +12,7 @@ import {
   statuses,
 } from './checkListSlice';
 import { RoomNumberInput } from '../InputRoom/InputRoom';
-import './CheckList.css';
-import { useEffect } from 'react';
+import { useAuth } from 'app/providers/auth/AuthContext';
 
 const { IDLE, SENDING, SUCCESS, ERROR } = sendStatuses;
 const { OK, EMPTY, PROBLEM, SOLUTION } = statuses;
@@ -28,6 +29,7 @@ export const CheckList = () => {
     (state) => state.checkList,
   );
   const { selectedRoom, isValidRoom } = useSelector((state) => state.rooms);
+  const { user } = useAuth();
   const dispatch = useDispatch();
 
   const isActiveSend = isFullChecked && isValidRoom;
@@ -42,7 +44,7 @@ export const CheckList = () => {
 
   const onSendData = () => {
     if (!isActiveSend) return;
-    dispatch(sendCheck(selectedRoom.id));
+    dispatch(sendCheck(selectedRoom.id, user.login));
   };
 
   useEffect(() => {
