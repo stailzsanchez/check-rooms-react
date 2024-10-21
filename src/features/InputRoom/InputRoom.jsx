@@ -31,7 +31,6 @@ export const RoomNumberInput = () => {
     isValidInput(room.name);
     setShowOptions(false);
     dispatch(setSelectedRoom(room));
-    console.log('handleRoomSelect room', room);
   };
 
   useEffect(() => {

@@ -8,7 +8,6 @@ import { AppRoutes } from '../../app/providers/router/routerConfig';
 const BottomNavigation = () => {
     const location = useLocation();
     const { user } = useAuth();
-    console.log("BottomNavigation user", user);
 
 
     const navItems = [

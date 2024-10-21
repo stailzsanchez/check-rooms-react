@@ -192,7 +192,6 @@ export const getCheckTypes = () => {
     try {
       const res = await api.get(`/get-check-types`);
       dispatch(initItemsWithTypes(res.data));
-      console.log('get-check-types', res.data);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       dispatch(setErrorGetCheckTypes(message));

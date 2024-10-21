@@ -14,7 +14,6 @@ export const MorningCheckList = () => {
         try {
             const response = await api.get('/morning-check-rooms');
             setRooms(response.data);
-            console.log('fetchMorningCheckRoomsresponse.data', response.data);
         } catch (error) {
             console.error('Ошибка при получении списка комнат для утренней проверки:', error.response?.data || error.message);
             if (error.response?.status === 401) {
