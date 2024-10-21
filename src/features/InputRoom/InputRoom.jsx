@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
 import "./InputRoom.css";
@@ -10,7 +10,7 @@ export const RoomNumberInput = () => {
   const { rooms, isValidRoom, selectedRoom } = useSelector(
     (state) => state.rooms
   );
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(selectedRoom?.name || "");
   const [showOptions, setShowOptions] = useState(false);
 
   const onInputChange = (event) => {
@@ -34,14 +34,18 @@ export const RoomNumberInput = () => {
     console.log('handleRoomSelect room', room);
   };
 
+  useEffect(() => {
+    if (selectedRoom === null) {
+      setInputValue("");
+    }
+  }, [selectedRoom]);
+
   return (
     <div className="room-select">
       {selectedRoom && (
         <div className="last-check-info">
           <h3>Последняя проверка:</h3>
           <p>Дата: {formatLastCheckDate(selectedRoom.date_no_format)}</p>
-          {/* <p>Дата: {selectedRoom.date}</p> */}
-          {/* <p>Дата: {selectedRoom.date ? new Date(selectedRoom.last_check_date).toLocaleString() : 'Нет данных'}</p> */}
           <p>Проверил: {selectedRoom.login || 'Нет данных'}</p>
         </div>
       )}

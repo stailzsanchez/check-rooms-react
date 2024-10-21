@@ -52,6 +52,7 @@ export const CheckList = () => {
     if (!isActiveSend || !selectedRoom || !selectedRoom.id) return;
     console.log('Sending check for room:', selectedRoom);
     dispatch(sendCheck(selectedRoom.id, user.login));
+    // dispatch(resetState());
   };
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import api from 'app/api/api';
 import { format } from 'date-fns';
+import { resetRoomState } from '../InputRoom/InputRoomSlice';
 
 export const statuses = {
   OK: 'OK',
@@ -143,21 +144,20 @@ const checkListSlice = createSlice({
     setResponseData: (state, action) => {
       state.responseData = action.payload;
     },
-    // resetState: (state, action) => {
-    //   state.responseData = null;
-    //   state.isFullChecked = false;
-    //   state.loadingSend = false;
-    //   state.errorSend = false;
-    //   state.loadingGetCheckTypes = false;
-    //   state.errorGetCheckTypes = false;
-    //   state.sendStatus = IDLE;
-    //   state.responseData = null;
-
-    // },
+    resetState: (state) => {
+      state.items = state.items.map(item => ({
+        ...item,
+        status: statuses.EMPTY,
+        textProblem: '',
+        textSolution: ''
+      }));
+      // state.isFullChecked = false;
+      // state.sendStatus = IDLE;
+      // state.responseData = null;
+    },
   },
 });
 
-// AppThunk sets the type definitions for the dispatch method
 export const sendCheck = (room_id, login) => {
   return async (dispatch, getState) => {
     dispatch(setSendStatus(SENDING));
@@ -166,9 +166,12 @@ export const sendCheck = (room_id, login) => {
       const res = await api.post(`/send-check`, { items, room_id, login });
       dispatch(setSendStatus(SUCCESS));
       dispatch(setResponseData(res.data));
+      dispatch(resetState());
+      dispatch(resetRoomState());
       setTimeout(() => {
         dispatch(setSendStatus(IDLE));
         dispatch(setResponseData(null));
+
       }, 7000);
     } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || 'Неизвестная ошибка';
@@ -182,6 +185,7 @@ export const sendCheck = (room_id, login) => {
     }
   };
 };
+
 export const getCheckTypes = () => {
   return async (dispatch) => {
     dispatch(setLoadingGetCheckTypes(true));
@@ -199,6 +203,7 @@ export const getCheckTypes = () => {
 };
 
 export const {
+  resetState,
   changeStatus,
   changeTextProblem,
   changeTextSolution,

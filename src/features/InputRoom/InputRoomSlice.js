@@ -34,6 +34,11 @@ const roomSlice = createSlice({
     setErrorRooms: (state, { payload }) => {
       state.error = payload;
     },
+    resetRoomState: (state) => {
+      state.selectedRoom = null;
+      state.isValidRoom = false;
+      state.rooms = [];
+    },
   },
 });
 
@@ -58,5 +63,6 @@ export const {
   setLoadingRooms,
   setErrorRooms,
   setRooms,
+  resetRoomState,
 } = roomSlice.actions;
 export default roomSlice.reducer;
