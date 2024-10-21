@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from 'app/api/api';
 import './MorningCheckList.css';
+import { formatLastCheckDate } from 'shared/lib/date/formatLastCheckDate';
 
 export const MorningCheckList = () => {
     const [rooms, setRooms] = useState([]);
@@ -30,7 +31,8 @@ export const MorningCheckList = () => {
             {rooms.filter(room => !room.checked_today).map(room => (
                 <div key={room.id} className="room-item">
                     <span>{room.name}</span>
-                    <span>{room.last_check_date ? new Date(room.last_check_date).toLocaleString() : 'Нет данных'}</span>
+                    <span>{formatLastCheckDate(room.last_check_date)}</span>
+                    {/* <span>{room.last_check_date ? new Date(room.last_check_date).toLocaleString() : 'Нет данных'}</span> */}
                     <span>{room.last_check_user_name || 'Нет данных'}</span>
                 </div>
             ))}
@@ -38,7 +40,8 @@ export const MorningCheckList = () => {
             {rooms.filter(room => room.checked_today).map(room => (
                 <div key={room.id} className="room-item">
                     <span>{room.name}</span>
-                    <span>{new Date(room.last_check_date).toLocaleString()}</span>
+                    <span>{formatLastCheckDate(room.last_check_date)}</span>
+                    {/* <span>{new Date(room.last_check_date).toLocaleString()}</span> */}
                     <span>{room.last_check_user_name}</span>
                 </div>
             ))}

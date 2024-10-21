@@ -42,8 +42,15 @@ export const CheckList = () => {
     dispatch(setAllOk());
   };
 
+  // const onSendData = () => {
+  //   if (!isActiveSend) return;
+  //   dispatch(sendCheck(selectedRoom.id, user.login));
+  // };
+
   const onSendData = () => {
-    if (!isActiveSend) return;
+    console.log('onSendData', isActiveSend, selectedRoom, selectedRoom.id);
+    if (!isActiveSend || !selectedRoom || !selectedRoom.id) return;
+    console.log('Sending check for room:', selectedRoom);
     dispatch(sendCheck(selectedRoom.id, user.login));
   };
 

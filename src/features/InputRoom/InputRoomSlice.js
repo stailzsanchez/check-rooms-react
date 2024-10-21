@@ -5,7 +5,7 @@ const roomSlice = createSlice({
   name: "rooms",
   initialState: {
     rooms: [],
-    selectedRoom: {},
+    selectedRoom: null,
     isValidRoom: false,
     loadingRooms: false,
     errorRooms: "",
@@ -18,7 +18,7 @@ const roomSlice = createSlice({
       const selectedRoomName = action.payload;
       console.log('selectedRoomName', selectedRoomName);
       const foundRoom = state.rooms.find(
-        (room) => room.name === selectedRoomName
+        (room) => room.name === selectedRoomName.name
       );
       if (!foundRoom) state.selectedRoom = {};
       console.log('foundRoom', foundRoom);

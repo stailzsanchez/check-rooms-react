@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
 import "./InputRoom.css";
+import { formatLastCheckDate } from "shared/lib/date/formatLastCheckDate";
+
 
 export const RoomNumberInput = () => {
   const dispatch = useDispatch();
@@ -34,6 +36,15 @@ export const RoomNumberInput = () => {
 
   return (
     <div className="room-select">
+      {selectedRoom && (
+        <div className="last-check-info">
+          <h3>Последняя проверка:</h3>
+          <p>Дата: {formatLastCheckDate(selectedRoom.date_no_format)}</p>
+          {/* <p>Дата: {selectedRoom.date}</p> */}
+          {/* <p>Дата: {selectedRoom.date ? new Date(selectedRoom.last_check_date).toLocaleString() : 'Нет данных'}</p> */}
+          <p>Проверил: {selectedRoom.login || 'Нет данных'}</p>
+        </div>
+      )}
       <input
         type="text"
         id="roomSelect"
@@ -66,13 +77,7 @@ export const RoomNumberInput = () => {
         <div className="warn-room">Выберите существующий кабинет</div>
       )}
 
-      {selectedRoom && (
-        <div className="last-check-info">
-          <h3>Последняя проверка:</h3>
-          <p>Дата: {selectedRoom.last_check_date ? new Date(selectedRoom.last_check_date).toLocaleString() : 'Нет данных'}</p>
-          <p>Проверил: {selectedRoom.last_check_user_name || 'Нет данных'}</p>
-        </div>
-      )}
+
     </div>
   );
 }
