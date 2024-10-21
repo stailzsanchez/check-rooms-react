@@ -20,7 +20,7 @@ const BottomNavigation = () => {
 
     if (user && user.role === 'admin') {
         navItems.push(
-            { path: AppRoutes.ADMIN_PAGE, icon: '👤', label: 'Админ' },
+            { path: AppRoutes.ADMIN_PAGE, icon: '🔒', label: 'Админ' },
         );
     }
 
