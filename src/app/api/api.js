@@ -1,23 +1,31 @@
 import axios from 'axios';
 
+// const api = axios.create({
+//   baseURL: import.meta.env.VITE_API_CHECKROOMS,
+// });
 
+const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_CHECKROOMS,
+  baseURL: isProduction
+    ? import.meta.env.VITE_API_CHECKROOMS_PROD
+    : import.meta.env.VITE_API_CHECKROOMS_DEV,
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers['x-auth-token'] = token;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['x-auth-token'] = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 export default api;
-
 
 // import axios from 'axios';
 // import jwt_decode from "jwt-decode";

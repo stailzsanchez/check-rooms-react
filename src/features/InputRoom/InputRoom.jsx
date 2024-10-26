@@ -69,6 +69,8 @@ export const RoomNumberInput = () => {
                 key={room.id}
                 className="option"
                 onClick={() => handleRoomSelect(room)}
+                onMouseDown={() => handleRoomSelect(room)}
+                onTouchStart={() => handleRoomSelect(room)}
               >
                 {room.name}
               </div>
