@@ -1,27 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
-import api from "app/api/api";
+import { createSlice } from '@reduxjs/toolkit';
+import api from 'app/api/api';
 
 const roomSlice = createSlice({
-  name: "rooms",
+  name: 'rooms',
   initialState: {
     rooms: [],
     selectedRoom: null,
     isValidRoom: false,
     loadingRooms: false,
-    errorRooms: "",
+    errorRooms: '',
   },
   reducers: {
     setRooms: (state, { payload }) => {
       state.rooms = payload;
     },
     setSelectedRoom: (state, action) => {
-      const selectedRoomName = action.payload;
-      const foundRoom = state.rooms.find(
-        (room) => room.name === selectedRoomName.name
-      );
-      if (!foundRoom) state.selectedRoom = {};
-      
-      state.selectedRoom = foundRoom;
+      const selectedRoom = action.payload;
+      // const foundRoom = state.rooms.find((room) => room.name === selectedRoom.name);
+      // if (!foundRoom) state.selectedRoom = {};
+
+      state.selectedRoom = selectedRoom;
     },
     setIsValidRoom: (state, action) => {
       state.isValidRoom = action.payload;
@@ -35,7 +33,7 @@ const roomSlice = createSlice({
     resetRoomState: (state) => {
       state.selectedRoom = null;
       state.isValidRoom = false;
-      state.rooms = [];
+      // state.rooms = [];
     },
   },
 });
@@ -47,10 +45,23 @@ export const getRooms = (searchText) => {
       const res = await api.post(`/rooms`, { searchText });
       dispatch(setRooms(res.data));
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       dispatch(setErrorRooms(message));
     } finally {
       dispatch(setLoadingRooms(false));
+    }
+  };
+};
+
+export const goToRoomCheckList = (roomId) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/rooms/${roomId}`);
+      dispatch(setSelectedRoom(res.data));
+      dispatch(setIsValidRoom(true));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      dispatch(setErrorRooms(message));
     }
   };
 };

@@ -18,6 +18,7 @@
     border-radius: 5px;
     font-size: 16px;
     transition: border-color 0.3s, box-shadow 0.3s;
+    padding-right: 33px;
 }
 
 .room-select input:focus {
@@ -82,3 +83,16 @@
     font-size: 14px;
     color: #666;
 }
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content
+  }
+  
+  .valid-room-emoji {
+    position: absolute;
+    right: 10px;
+    font-size: 1.2em;
+  }

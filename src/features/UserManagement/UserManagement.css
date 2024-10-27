@@ -1,7 +1,9 @@
 .user-management {
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .user-management-title {
@@ -35,8 +37,9 @@
 }
 
 .users-table {
-    width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
+    width: 100%;
 }
 
 .users-table th,
@@ -62,4 +65,26 @@
 
 .delete-button:hover {
     background-color: #d32f2f;
+}
+
+@media screen and (max-width: 600px) {
+    .user-management {
+        padding: 10px;
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .add-user-form {
+        flex-direction: column;
+    }
+
+    .add-user-form input,
+    .add-user-form select,
+    .add-user-form button {
+        width: 100%;
+    }
 }

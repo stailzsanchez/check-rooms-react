@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setSelectedRoom, setIsValidRoom, getRooms } from "./InputRoomSlice";
-import "./InputRoom.css";
-import { formatLastCheckDate } from "shared/lib/date/formatLastCheckDate";
-
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedRoom, setIsValidRoom, getRooms } from './InputRoomSlice';
+import './InputRoom.css';
+import { formatLastCheckDate } from 'shared/lib/date/formatLastCheckDate';
 
 export const RoomNumberInput = () => {
   const dispatch = useDispatch();
-  const { rooms, isValidRoom, selectedRoom } = useSelector(
-    (state) => state.rooms
-  );
-  const [inputValue, setInputValue] = useState(selectedRoom?.name || "");
+  const { rooms, isValidRoom, selectedRoom } = useSelector((state) => state.rooms);
+  const [inputValue, setInputValue] = useState(selectedRoom?.name || '');
   const [showOptions, setShowOptions] = useState(false);
 
   const onInputChange = (event) => {
@@ -22,6 +19,10 @@ export const RoomNumberInput = () => {
   };
 
   const isValidInput = (text) => {
+    if (selectedRoom?.id) {
+      dispatch(setIsValidRoom(true));
+      return;
+    }
     const isValid = rooms.some((room) => room.name === text);
     dispatch(setIsValidRoom(isValid));
   };
@@ -32,10 +33,12 @@ export const RoomNumberInput = () => {
     setShowOptions(false);
     dispatch(setSelectedRoom(room));
   };
-
   useEffect(() => {
-    if (selectedRoom === null) {
-      setInputValue("");
+    if (selectedRoom) {
+      setInputValue(selectedRoom.name);
+      // isValidInput(selectedRoom.name);
+    } else {
+      setInputValue('');
     }
   }, [selectedRoom]);
 
@@ -48,22 +51,24 @@ export const RoomNumberInput = () => {
           <p>Проверил: {selectedRoom.login || 'Нет данных'}</p>
         </div>
       )}
-      <input
-        type="text"
-        id="roomSelect"
-        value={inputValue}
-        onChange={onInputChange}
-        placeholder="Введите кабинет"
-        required
-        onFocus={() => setShowOptions(true)}
-        onBlur={() => setTimeout(() => setShowOptions(false), 100)}
-      />
+      <div className="input-container">
+        <input
+          type="text"
+          id="roomSelect"
+          value={inputValue}
+          onChange={onInputChange}
+          placeholder="Введите кабинет"
+          required
+          onFocus={() => setShowOptions(true)}
+          onBlur={() => setTimeout(() => setShowOptions(false), 100)}
+        />
+        {isValidRoom && selectedRoom && <span className="valid-room-emoji">✅</span>}
+      </div>
+
       {showOptions && (
         <div className="options-list">
           {rooms
-            .filter((room) =>
-              room.name.toLowerCase().includes(inputValue.toLowerCase())
-            )
+            .filter((room) => room.name.toLowerCase().includes(inputValue.toLowerCase()))
             .map((room) => (
               <div
                 key={room.id}
@@ -78,11 +83,7 @@ export const RoomNumberInput = () => {
         </div>
       )}
 
-      {!isValidRoom && (
-        <div className="warn-room">Выберите существующий кабинет</div>
-      )}
-
-
+      {!isValidRoom && <div className="warn-room">Выберите существующий кабинет</div>}
     </div>
   );
-}
+};

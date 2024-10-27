@@ -22,7 +22,7 @@ export const SettingsPage = () => {
     };
 
     const handleMorningCheckSetup = () => {
-        navigate(AppRoutes.MORNING_CHECK_ROOMS);
+        navigate(AppRoutes.MORNING_CHECK_SETTINGS);
     };
 
     return (

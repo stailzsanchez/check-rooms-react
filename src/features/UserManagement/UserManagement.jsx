@@ -92,18 +92,20 @@ export const UserManagement = () => {
                 </select>
                 <button type="submit">Добавить пользователя</button>
             </form>
-            <table className="users-table">
-                <thead>
-                    <tr>
-                        <th>Логин пользователя</th>
-                        <th>Роль</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {usersUI}
-                </tbody>
-            </table>
+            <div className="table-wrapper">
+    <table className="users-table">
+        <thead>
+            <tr>
+                <th>Логин пользователя</th>
+                <th>Роль</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {usersUI}
+        </tbody>
+    </table>
+</div>
         </div>
     );
 }

@@ -1,10 +1,8 @@
-
-
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 export const formatLastCheckDate = (dateString) => {
-  if (!dateString) return 'Нет данных';
+  if (!dateString) return '-';
 
   const lastCheckDate = new Date(dateString);
 

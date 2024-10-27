@@ -152,8 +152,8 @@ const checkListSlice = createSlice({
         textSolution: '',
       }));
       state.isFullChecked = false;
-      state.sendStatus = IDLE;
-      state.responseData = null;
+      // state.sendStatus = IDLE;
+      // state.responseData = null;
     },
   },
 });

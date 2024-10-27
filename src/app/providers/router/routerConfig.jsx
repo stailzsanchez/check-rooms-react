@@ -12,11 +12,11 @@ export const AppRoutes = {
   CHECKS_PAGE: '/checks',
   LOGIN_PAGE: '/login',
   SETTINGS_PAGE: '/settings',
-  MORNING_CHECK_ROOMS: '/morning-check-rooms',
+  MORNING_CHECK_SETTINGS: '/morning-check-settings',
   MORNING_CHECK_LIST: '/morning-check-list',
 }
 
-const { MAIN, ADMIN_PAGE, CHECKS_PAGE, LOGIN_PAGE, SETTINGS_PAGE, MORNING_CHECK_ROOMS, MORNING_CHECK_LIST } = AppRoutes;
+const { MAIN, ADMIN_PAGE, CHECKS_PAGE, LOGIN_PAGE, SETTINGS_PAGE, MORNING_CHECK_SETTINGS, MORNING_CHECK_LIST } = AppRoutes;
 
 export const routeConfig = {
   [MAIN]: {
@@ -39,8 +39,8 @@ export const routeConfig = {
     path: SETTINGS_PAGE,
     element: (<SettingsPage />),
   },
-  [MORNING_CHECK_ROOMS]: {
-    path: MORNING_CHECK_ROOMS,
+  [MORNING_CHECK_SETTINGS]: {
+    path: MORNING_CHECK_SETTINGS,
     element: (<MorningCheckPage />),
   },
   [MORNING_CHECK_LIST]: {

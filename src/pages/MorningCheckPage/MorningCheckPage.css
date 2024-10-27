@@ -27,17 +27,22 @@
     font-weight: bold;
 }
 
+.toggle-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.go-to-checklist-button:hover {
+    opacity: 0.7;
+}
+
 .room-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-}
-
-.toggle-button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
 }
