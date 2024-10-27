@@ -53,21 +53,21 @@ export const Item = ({ item }) => {
   };
 
   const styleOk = () => {
-    return status === OK ? 'button ok' : 'button';
+    return status === OK ? 'check-list__button ok' : 'check-list__button';
   };
 
   const styleProblem = () => {
     if (status === SOLUTION) {
-      return 'button solution';
+      return 'check-list__button solution';
     }
-    return status === PROBLEM ? 'button problem' : 'button';
+    return status === PROBLEM ? 'check-list__button problem' : 'check-list__button';
   };
 
   return (
-    <div className="item">
-      <div className="item-content">
-        <span className="item-title">{title}</span>
-        <div className="button-container">
+    <div className="check-list__item">
+      <div className="check-list__item-content">
+        <span className="check-list__item-title">{title}</span>
+        <div className="check-list__button-container">
           <button className={styleOk()} onClick={() => onStatusClick(OK)}>
             ОК
           </button>
@@ -80,14 +80,14 @@ export const Item = ({ item }) => {
         <>
           <textarea
             ref={textareaRef}
-            className="problem-textarea"
+            className="check-list__textarea"
             value={textProblem}
             onChange={onChangeTextProblem}
             placeholder="Опишите проблему. Минимум 5 символов"
           />
           {textProblem.length >= 5 && (
             <textarea
-              className="problem-textarea"
+              className="check-list__textarea"
               value={textSolution}
               onChange={onChangeTextSolution}
               placeholder="Опишите решение если решили"

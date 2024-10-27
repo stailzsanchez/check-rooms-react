@@ -6,9 +6,10 @@ import { formatLastCheckDate } from 'shared/lib/date/formatLastCheckDate';
 import './MorningCheckList.css';
 import { AppRoutes } from 'app/providers/router/routerConfig';
 import { goToRoomCheckList } from '../../features/InputRoom/InputRoomSlice';
+import { Loader } from 'shared/ui/AppLoader/AppLoader';
 
 export const MorningCheckList = () => {
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms, loadingRooms] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -45,6 +46,10 @@ export const MorningCheckList = () => {
       <span>{room.last_check_user_name || '-'}</span>
     </div>
   );
+
+  if (loadingRooms) {
+    return <Loader />;
+  }
 
   return (
     <div className="morning-check-list">

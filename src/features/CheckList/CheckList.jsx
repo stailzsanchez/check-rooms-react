@@ -60,7 +60,6 @@ export const CheckList = () => {
   return (
     <div className="check-list">
       <RoomNumberInput />
-
       <div className="items">
         {items.map((item) => (
           <Item key={item.id} item={item} onChangeStatus={onChangeStatus} />
@@ -93,7 +92,8 @@ export const CheckList = () => {
       )}
       {sendStatus === SUCCESS && responseData && (
         <div className="send-status success">
-          Данные отправлены {responseData.roomName}✅ {responseData.successCount}/{responseData.totalCount}
+          Данные отправлены {responseData.roomName}✅ {responseData.successCount}/
+          {responseData.totalCount}
           {responseData.problemItems && responseData.problemItems.length > 0 && (
             <div className="problem-items">
               {responseData.problemItems.map((item, index) => (

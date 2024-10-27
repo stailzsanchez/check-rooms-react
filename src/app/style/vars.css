@@ -1,6 +1,27 @@
 :root {
+
+    --app-bg-color: #17191a;
+    --app-content-bg-color: #222527;
+    --app-content-items-bg-color: #45484e;
+    --app-container-width: 1000px;
+
+    --app-border-radius: 12px;
+
+    --header-check-list-bg-color: #2c2d30;
+    
     --bg-red: #f44336;
     --text-red: #f44336;
 
-    --app-container-width: 1000px;
+    --text-color-primary: #ffffff;
+    --text-color-second: #d3cccc;
+
+    --btn-bg-color-success: #4CAF50;
+    --btn-bg-color-error: #f44336;
+    --btn-bg-color-disabled: #808080;
+    --btn-bg-color-default: #4d5052;
+    --btn-bg-color-hover: #5d6062;
+    --btn-bg-color-active: #6d7072;
+    --btn-bg-color-send: #4CAF50;
+    --btn-bg-color-primary: #3e84d3;
+    --btn-bg-color-second: #1f5b83;
 }

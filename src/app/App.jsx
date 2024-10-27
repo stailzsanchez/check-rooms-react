@@ -4,6 +4,7 @@ import { AppRouter } from './providers/router/AppRouter';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
 import BottomNavigation from 'features/BottomNavigation/BottomNavigation';
 import './style/index.css';
+import { RoomNumberInput } from 'features/InputRoom/InputRoom';
 
 export const App = () => {
   const { isAuthenticated } = useAuth();

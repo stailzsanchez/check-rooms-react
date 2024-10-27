@@ -1,8 +1,27 @@
 .room-select {
+
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    position: relative;
+    /* position: relative; */
+    margin: 0 auto;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    max-width: var(--app-container-width);
+    color: var(--text-color-primary);
+    margin: 0 auto;
+    padding: 12px;
+    background-color: var(--header-check-list-bg-color);
+}
+
+.last-check-compact {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
 }
 
 .room-select label {
@@ -11,25 +30,31 @@
     color: #333;
 }
 
+
+
 .room-select input {
-    width: 200px;
+    width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
+    background-color: var(--app-content-items-bg-color);
     border-radius: 5px;
     font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    /* transition: border-color 0.3s, box-shadow 0.3s; */
     padding-right: 33px;
+    color: var(--text-color-primary);
+    border-radius: var(--app-border-radius);
+    border: none;
 }
 
-.room-select input:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+ .room-select input:focus {
+    /* border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); */
     outline: none;
-}
+} 
 
-.room-select input::placeholder {
+ /* .room-select input::placeholder {
     color: #aaa;
-}
+}  */
 
 .last-check__wrap {
     display: flex;
@@ -38,13 +63,13 @@
 
 .options-list {
     position: absolute;
+    margin: 0 12px;
     top: 100%;
     left: 0;
     right: 0;
     max-height: 200px;
     overflow-y: auto;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: var(--app-content-items-bg-color);
     border-radius: 5px;
     z-index: 1000;
 }
@@ -54,9 +79,9 @@
     cursor: pointer;
 }
 
-.option:hover {
+/* .option:hover {
     background-color: #f0f0f0;
-}
+} */
 
 .warn-room {
     margin-top: 5px;
@@ -88,7 +113,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: fit-content
+    max-width: 400px;
+    /* width: fit-content */
   }
   
   .valid-room-emoji {

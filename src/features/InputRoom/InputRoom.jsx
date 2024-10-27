@@ -19,10 +19,10 @@ export const RoomNumberInput = () => {
   };
 
   const isValidInput = (text) => {
-    if (selectedRoom?.id) {
-      dispatch(setIsValidRoom(true));
-      return;
-    }
+    // if (selectedRoom?.id) {
+    //   dispatch(setIsValidRoom(true));
+    //   return;
+    // }
     const isValid = rooms.some((room) => room.name === text);
     dispatch(setIsValidRoom(isValid));
   };
@@ -33,6 +33,32 @@ export const RoomNumberInput = () => {
     setShowOptions(false);
     dispatch(setSelectedRoom(room));
   };
+
+  const lastCheckUI = () => {
+    if (!selectedRoom?.login) return null;
+    return (
+      <div className="last-check-compact">
+        <div className="last-check-compact__login">
+          {selectedRoom.login ? `🎯 ${selectedRoom.login}` : '🎯 -'}
+        </div>
+        <div className="last-check-compact__date">
+          🕖{formatLastCheckDate(selectedRoom.date_no_format)}
+        </div>
+      </div>
+    );
+  };
+
+  const onFocusSelect = () => {
+    if (rooms.length === 0) {
+      dispatch(getRooms(''));
+    }
+    setShowOptions(true);
+  };
+
+  const onBlurSelect = () => {
+    setTimeout(() => setShowOptions(false), 100);
+  };
+
   useEffect(() => {
     if (selectedRoom) {
       setInputValue(selectedRoom.name);
@@ -44,13 +70,7 @@ export const RoomNumberInput = () => {
 
   return (
     <div className="room-select">
-      {selectedRoom && (
-        <div className="last-check-info">
-          <h3>Последняя проверка:</h3>
-          <p>Дата: {formatLastCheckDate(selectedRoom.date_no_format)}</p>
-          <p>Проверил: {selectedRoom.login || 'Нет данных'}</p>
-        </div>
-      )}
+      {lastCheckUI()}
       <div className="input-container">
         <input
           type="text"
@@ -59,8 +79,8 @@ export const RoomNumberInput = () => {
           onChange={onInputChange}
           placeholder="Введите кабинет"
           required
-          onFocus={() => setShowOptions(true)}
-          onBlur={() => setTimeout(() => setShowOptions(false), 100)}
+          onFocus={onFocusSelect}
+          onBlur={onBlurSelect}
         />
         {isValidRoom && selectedRoom && <span className="valid-room-emoji">✅</span>}
       </div>
@@ -74,8 +94,7 @@ export const RoomNumberInput = () => {
                 key={room.id}
                 className="option"
                 onClick={() => handleRoomSelect(room)}
-                // onMouseDown={() => handleRoomSelect(room)}
-                onTouchStart={() => handleRoomSelect(room)}
+                onMouseDown={() => handleRoomSelect(room)}
               >
                 {room.name}
               </div>

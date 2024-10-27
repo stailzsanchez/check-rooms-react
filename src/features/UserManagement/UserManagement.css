@@ -50,12 +50,12 @@
 }
 
 .users-table th {
-    background-color: #f2f2f2;
+    /* background-color: #f2f2f2; */
     font-weight: bold;
 }
 
 .delete-button {
-    background-color: #f44336;
+    background-color: var(--bg-red);
     color: white;
     border: none;
     padding: 5px 10px;
@@ -64,7 +64,7 @@
 }
 
 .delete-button:hover {
-    background-color: #d32f2f;
+    background-color: var(--bg-red);
 }
 
 @media screen and (max-width: 600px) {
