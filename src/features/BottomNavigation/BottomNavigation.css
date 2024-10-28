@@ -1,6 +1,6 @@
 .bottom-nav {
     width: 100%;
-    background-color: var(--app-content-bg-color);
+    background-color: var(--app-fixed-item-bg-color);
     max-width: var(--app-container-width);
     margin: 0 auto;
     position: fixed;
@@ -24,7 +24,7 @@
     text-decoration: none;
     color: var(--text-color-primary);
     /* transition: all 0.3s ease; */
-    background-color: var(--app-content-bg-color);
+    background-color: var(--app-fixed-item-bg-color);
 }
 
 .nav-item:hover {

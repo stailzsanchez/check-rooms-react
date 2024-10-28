@@ -4,16 +4,16 @@
     flex-direction: column;
     margin-bottom: 15px;
     /* position: relative; */
-    margin: 0 auto;
     position: fixed;
     top: 0px;
     left: 0;
     width: 100%;
-    max-width: var(--app-container-width);
+
+    /* max-width: var(--app-container-width); */
     color: var(--text-color-primary);
-    margin: 0 auto;
-    padding: 12px;
-    background-color: var(--header-check-list-bg-color);
+    /* margin: 0 auto; */
+    padding: var(--app-padding);
+    background-color: var(--app-fixed-item-bg-color);
 }
 
 .last-check-compact {
@@ -75,7 +75,7 @@
 }
 
 .option {
-    padding: 10px;
+    padding: var(--app-padding);
     cursor: pointer;
 }
 
@@ -121,4 +121,19 @@
     position: absolute;
     right: 10px;
     font-size: 1.2em;
+  }
+
+
+  @media (min-width: 1000px) {
+    .room-select {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0 auto;
+        border-radius: var(--app-border-radius);
+        width: calc(var(--app-container-width) - var(--app-padding) * 2);
+
+    }
+
   }

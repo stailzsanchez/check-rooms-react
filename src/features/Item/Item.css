@@ -24,6 +24,8 @@
     align-items: center;
     flex: 1;
     text-align: left;
+    font-weight: bold;
+    font-size: 18px
 }
 
 .check-list__button-container {
@@ -43,6 +45,11 @@
     transition: transform 0.2s, background-color 0.3s;
 }
 
+.check-list__button:active,
+.check-list__button:focus {
+    outline: none;
+}
+
 .check-list__button:hover {
     transform: scale(1.05);
 }
@@ -52,16 +59,16 @@
 }
 
 .check-list__button.problem {
-    background-color: var(--bg-red);
+    background-color: var(--btn-bg-color-error);
 }
 .check-list__button.solution {
-    background-color: #2135e9;
+    background-color: var(--btn-bg-color-primary);
 }
 
 .check-list__textarea {
     width: 100%;
     padding: 10px;
-    color: var(--text-color-second);
+    color: var(--text-color-primary);
     /* border: 1px solid #ddd; */
     border: none;
     background-color: var(--app-content-bg-color);

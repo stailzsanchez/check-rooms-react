@@ -19,17 +19,30 @@
     margin-bottom: 20px;
 }
 
+.add-user-form__input {
+    background-color: var(--app-content-items-bg-color);
+}
+
 .add-user-form input,
 .add-user-form select {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    /* border: 1px solid var(--text-color-second); */
+    border: none;
     border-radius: 4px;
+    background-color: var(--app-content-items-bg-color);
+    color: var(--text-color-primary);
+}
+
+.add-user-form input:focus,
+.add-user-form select:focus {
+    outline: none;
 }
 
 .add-user-form button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: var(--btn-bg-color-success);
+    font-weight: bold;
     color: white;
     border: none;
     border-radius: 4px;
@@ -37,21 +50,43 @@
 }
 
 .users-table {
-    border-collapse: collapse;
-    overflow-x: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
     width: 100%;
+    border-radius: var(--app-border-radius);
+    background-color: var(--app-content-items-bg-color);
+    border: none;
+}
+
+
+.users-table th:first-child {
+    border-top-left-radius: var(--app-border-radius);
+}
+
+.users-table th:last-child {
+    border-top-right-radius: var(--app-border-radius);
+}
+
+.users-table tr:last-child td:first-child {
+    border-bottom-left-radius: var(--app-border-radius);
+}
+
+.users-table tr:last-child td:last-child {
+    border-bottom-right-radius: var(--app-border-radius);
 }
 
 .users-table th,
 .users-table td {
-    border: 1px solid #ddd;
+    /* border: 2px solid var(--app-content-bg-color); */
     padding: 12px;
     text-align: left;
 }
 
 .users-table th {
-    /* background-color: #f2f2f2; */
+    background-color: var(--app-content-items-bg-color);
     font-weight: bold;
+    
 }
 
 .delete-button {
