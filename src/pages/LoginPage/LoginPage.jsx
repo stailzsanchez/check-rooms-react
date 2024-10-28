@@ -14,12 +14,16 @@ export const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-
     setIsLoading(true);
+
     try {
+      if (!login.trim() || !password.trim()) {
+        throw new Error('Заполните все поля');
+      }
+
       await authLogin(login, password);
     } catch (err) {
-      setError('Ошибка при входе. Проверьте логин и пароль.');
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }

@@ -69,7 +69,7 @@
 }
 
 
-.send-status {
+/* .send-status {
   margin-top: 15px;
   padding: 10px;
   border-radius: 5px;
@@ -82,14 +82,13 @@
 }
 
 .send-status.success {
-  background-color: #e6ffe6;
-  color: #4CAF50;
+  background-color: var(--bg-color-success);
+  color: var(--text-color-primary);
 }
 
 .send-status.error {
-  background-color: #ffe6e6;
-  color: #f44336;
-}
+  background-color: var(--bg-color-error);
+} */
 
 .loader {
   border: 4px solid #f3f3f3;
@@ -123,10 +122,6 @@
   margin-left: 10px;
 }
 
-/* .check-list__button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-} */
 
 .send-status {
   margin-top: 15px;
@@ -137,13 +132,13 @@
 }
 
 .send-status.success {
-  background-color: #e6ffe6;
-  color: #4CAF50;
+  background-color: var(--bg-color-success);
+  color: var(--text-color-primary);
 }
 
 .send-status.error {
-  background-color: #ffe6e6;
-  color: #f44336;
+  background-color: var(--bg-red);
+  color: var(--text-color-primary);
 }
 
 .problem-items {

@@ -25,6 +25,20 @@ api.interceptors.request.use(
   },
 );
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+    }
+
+    const errorMessage = error.response?.data?.message || 'Произошла ошибка при выполнении запроса';
+
+    error.userMessage = errorMessage;
+    return Promise.reject(error);
+  },
+);
+
 export default api;
 
 // import axios from 'axios';
