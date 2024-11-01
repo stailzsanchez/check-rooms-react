@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
   changeStatus,
   changeTextProblem,
@@ -56,6 +56,16 @@ export const Item = ({ item }) => {
     return status === OK ? 'check-list__button ok' : 'check-list__button';
   };
 
+  const onProblemButtonClick = (e) => {
+    e.stopPropagation(); // Останавливаем всплытие события
+    onStatusClick(PROBLEM);
+  };
+
+  const onOkButtonClick = (e) => {
+    e.stopPropagation(); // Останавливаем всплытие события
+    onStatusClick(OK);
+  };
+
   const styleProblem = () => {
     if (status === SOLUTION) {
       return 'check-list__button solution';
@@ -64,14 +74,14 @@ export const Item = ({ item }) => {
   };
 
   return (
-    <div className="check-list__item">
+    <div onClick={() => onStatusClick(OK)} className="check-list__item">
       <div className="check-list__item-content">
         <span className="check-list__item-title">{title}</span>
         <div className="check-list__button-container">
-          <button className={styleOk()} onClick={() => onStatusClick(OK)}>
+          <button className={styleOk()} onClick={onOkButtonClick}>
             ОК
           </button>
-          <button className={styleProblem()} onClick={() => onStatusClick(PROBLEM)}>
+          <button className={styleProblem()} onClick={onProblemButtonClick}>
             {textButtonProblem}
           </button>
         </div>
@@ -99,12 +109,12 @@ export const Item = ({ item }) => {
   );
 };
 
-Item.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    textProblem: PropTypes.string,
-    textSolution: PropTypes.string,
-  }).isRequired,
-};
+// Item.propTypes = {
+//   item: PropTypes.shape({
+//     id: PropTypes.number.isRequired,
+//     title: PropTypes.string.isRequired,
+//     status: PropTypes.string.isRequired,
+//     textProblem: PropTypes.string,
+//     textSolution: PropTypes.string,
+//   }).isRequired,
+// };

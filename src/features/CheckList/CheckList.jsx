@@ -6,6 +6,7 @@ import {
   changeStatus,
   exportChecks,
   getCheckTypes,
+  resetCheckListState,
   sendCheck,
   sendStatuses,
   setAllOk,
@@ -55,7 +56,10 @@ export const CheckList = () => {
 
   useEffect(() => {
     dispatch(getCheckTypes());
-  }, []);
+    return () => {
+      dispatch(resetCheckListState());
+    };
+  }, [dispatch]);
 
   return (
     <div className="check-list">
@@ -80,11 +84,8 @@ export const CheckList = () => {
             'Отправить'
           )}
         </button>
-        <button className="check-list__button-all-ok" onClick={onAllOkClick}>
+        {/* <button className="check-list__button-all-ok" onClick={onAllOkClick}>
           ✅ Всё ок
-        </button>
-        {/* <button className="check-list__button-export" onClick={() => dispatch(exportChecks())}>
-          📊 Экспорт
         </button> */}
       </div>
       {!isActiveSend && sendStatus !== SENDING && (

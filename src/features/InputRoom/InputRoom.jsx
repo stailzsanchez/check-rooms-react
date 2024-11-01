@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedRoom, setIsValidRoom, getRooms } from './InputRoomSlice';
+import { setSelectedRoom, setIsValidRoom, getRooms, resetRoomState } from './InputRoomSlice';
 import './InputRoom.css';
 import { formatLastCheckDate } from 'shared/lib/date/formatLastCheckDate';
 
@@ -67,6 +67,12 @@ export const RoomNumberInput = () => {
       setInputValue('');
     }
   }, [selectedRoom]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetRoomState());
+    };
+  }, [dispatch]);
 
   return (
     <div className="room-select">
