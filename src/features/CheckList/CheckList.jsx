@@ -84,9 +84,9 @@ export const CheckList = () => {
             'Отправить'
           )}
         </button>
-        {/* <button className="check-list__button-all-ok" onClick={onAllOkClick}>
+        <button className="check-list__button-all-ok" onClick={onAllOkClick}>
           ✅ Всё ок
-        </button> */}
+        </button>
       </div>
       {!isActiveSend && sendStatus !== SENDING && (
         <div className="warn-fields">Заполните все поля</div>

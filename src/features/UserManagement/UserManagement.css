@@ -102,6 +102,22 @@
     background-color: var(--bg-red);
 }
 
+.user-tg {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 2px;
+}
+
+.add-user-form__input {
+    margin-bottom: 10px;
+}
+
+.user-tg-name {
+    font-size: 0.8em;
+    margin-top: 2px;
+    color: var(--text-color-link);
+}
+
 @media screen and (max-width: 600px) {
     .user-management {
         padding: 10px;

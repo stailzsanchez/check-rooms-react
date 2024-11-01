@@ -48,7 +48,14 @@ export const UserManagement = () => {
     const canBeDeleted = user.login !== 'admin' && user.id !== userAuth.id;
     return (
       <tr key={user.id}>
-        <td>{user.login}</td>
+        <td>
+          <div>{user.login}</div>
+          {user.tg_name && (
+            <a href={`https://t.me/${user.tg_name.replace('@', '')}`} className="user-tg-name">
+              {user.tg_name}
+            </a>
+          )}
+        </td>
         <td>{user.role}</td>
         <td>
           {canBeDeleted && (
@@ -67,11 +74,21 @@ export const UserManagement = () => {
       <form onSubmit={handleAddUser} className="add-user-form">
         <input
           type="text"
+          placeholder="Telegram name @user"
+          value={newUser.tg_name}
+          className="add-user-form__input"
+          onChange={(e) => setNewUser({ ...newUser, tg_name: e.target.value })}
+          autoComplete="off"
+          required
+        />
+        <input
+          type="text"
           placeholder="Логин"
           value={newUser.login}
           className="add-user-form__input"
           onChange={(e) => setNewUser({ ...newUser, login: e.target.value })}
           required
+          autoComplete="new-login"
         />
         <input
           type="password"
@@ -80,6 +97,7 @@ export const UserManagement = () => {
           className="add-user-form__input"
           onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
           required
+          autoComplete="new-password"
         />
         <select
           value={newUser.role}
