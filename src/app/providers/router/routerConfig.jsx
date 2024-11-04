@@ -1,10 +1,9 @@
 import { AdminPage } from 'pages/AdminPage';
 import { ChecksPage } from 'pages/ChecksPage';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
-import { MorningCheckPage } from 'pages/MorningCheckPage/MorningCheckPage';
+import { MorningCheckSetup } from 'pages/MorningCheckSetup/MorningCheckSetup';
 import { SettingsPage } from 'pages/SettingPage/SettingsPage';
-import { MorningCheckList } from 'pages/MorningCheckList/MorningCheckList';
-
+import { MorningCheckView } from 'pages/MorningCheckView/MorningCheckView';
 
 export const AppRoutes = {
   MAIN: '/',
@@ -12,39 +11,47 @@ export const AppRoutes = {
   CHECKS_PAGE: '/checks',
   LOGIN_PAGE: '/login',
   SETTINGS_PAGE: '/settings',
-  MORNING_CHECK_SETTINGS: '/morning-check-settings',
-  MORNING_CHECK_LIST: '/morning-check-list',
-}
+  MORNING_CHECK_SETTINGS: '/morning-check-setup',
+  MORNING_CHECK_LIST: '/morning-check-view',
+};
 
-const { MAIN, ADMIN_PAGE, CHECKS_PAGE, LOGIN_PAGE, SETTINGS_PAGE, MORNING_CHECK_SETTINGS, MORNING_CHECK_LIST } = AppRoutes;
+const {
+  MAIN,
+  ADMIN_PAGE,
+  CHECKS_PAGE,
+  LOGIN_PAGE,
+  SETTINGS_PAGE,
+  MORNING_CHECK_SETTINGS,
+  MORNING_CHECK_LIST,
+} = AppRoutes;
 
 export const routeConfig = {
   [MAIN]: {
     path: MAIN,
-    element: (<ChecksPage />),
+    element: <ChecksPage />,
   },
   [ADMIN_PAGE]: {
     path: ADMIN_PAGE,
-    element: (<AdminPage />),
+    element: <AdminPage />,
   },
   [CHECKS_PAGE]: {
     path: CHECKS_PAGE,
-    element: (<ChecksPage />),
+    element: <ChecksPage />,
   },
   [LOGIN_PAGE]: {
     path: LOGIN_PAGE,
-    element: (<LoginPage />),
+    element: <LoginPage />,
   },
   [SETTINGS_PAGE]: {
     path: SETTINGS_PAGE,
-    element: (<SettingsPage />),
+    element: <SettingsPage />,
   },
   [MORNING_CHECK_SETTINGS]: {
     path: MORNING_CHECK_SETTINGS,
-    element: (<MorningCheckPage />),
+    element: <MorningCheckSetup />,
   },
   [MORNING_CHECK_LIST]: {
     path: MORNING_CHECK_LIST,
-    element: (<MorningCheckList />),
+    element: <MorningCheckView />,
   },
 };

@@ -34,3 +34,9 @@ button {
 button:focus {
     outline: none;
 }
+
+
+a {
+  color: var(--text-color-link);
+  text-decoration: none;
+}

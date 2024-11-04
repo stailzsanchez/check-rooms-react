@@ -46,12 +46,13 @@ export const UserManagement = () => {
 
   const usersUI = users.map((user) => {
     const canBeDeleted = user.login !== 'admin' && user.id !== userAuth.id;
+    const linkToTelegram = user.tg_name ? `https://t.me/${user.tg_name.replace('@', '')}` : '';
     return (
       <tr key={user.id}>
         <td>
           <div>{user.login}</div>
           {user.tg_name && (
-            <a href={`https://t.me/${user.tg_name.replace('@', '')}`} className="user-tg-name">
+            <a href={linkToTelegram} className="user-tg-name">
               {user.tg_name}
             </a>
           )}
