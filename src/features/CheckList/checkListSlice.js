@@ -40,7 +40,7 @@ const checkIsFullChecked = (items) => {
   let isValidReport = true;
   for (const item of items) {
     if (item.status === OK) continue;
-    if (item.status === EMPTY || (item.status === PROBLEM && item.textProblem.length < 5)) {
+    if (item.status === EMPTY || (item.status === PROBLEM && item.textProblem.length < 1)) {
       isValidReport = false;
       break;
     }

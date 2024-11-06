@@ -57,12 +57,12 @@ export const Item = ({ item }) => {
   };
 
   const onProblemButtonClick = (e) => {
-    e.stopPropagation(); // Останавливаем всплытие события
+    // e.stopPropagation(); // Останавливаем всплытие события
     onStatusClick(PROBLEM);
   };
 
   const onOkButtonClick = (e) => {
-    e.stopPropagation(); // Останавливаем всплытие события
+    // e.stopPropagation(); // Останавливаем всплытие события
     onStatusClick(OK);
   };
 
@@ -74,9 +74,11 @@ export const Item = ({ item }) => {
   };
 
   return (
-    <div onClick={() => onStatusClick(OK)} className="check-list__item">
+    <div className="check-list__item">
       <div className="check-list__item-content">
-        <span className="check-list__item-title">{title}</span>
+        <span className="check-list__item-title" onClick={() => onStatusClick(OK)}>
+          {title}
+        </span>
         <div className="check-list__button-container">
           <button className={styleOk()} onClick={onOkButtonClick}>
             ОК
@@ -95,7 +97,7 @@ export const Item = ({ item }) => {
             onChange={onChangeTextProblem}
             placeholder="Опишите проблему. Минимум 5 символов"
           />
-          {textProblem.length >= 5 && (
+          {textProblem.length >= 1 && (
             <textarea
               className="check-list__textarea"
               value={textSolution}
